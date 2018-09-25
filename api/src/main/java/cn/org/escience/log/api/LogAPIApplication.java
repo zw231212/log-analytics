@@ -4,9 +4,12 @@ package cn.org.escience.log.api;
 import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.api.web.conf.JerseyConfig;
 import java.net.URI;
+import java.util.Set;
 import javax.ws.rs.core.UriBuilder;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
+import org.glassfish.jersey.server.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +30,23 @@ public class LogAPIApplication {
         .fromUri(AppConstant.Server.uri)
         .port(AppConstant.Server.port)
         .build();
-    Server server = JettyHttpContainerFactory
-        .createServer(baseUri,
-        new JerseyConfig(AppConstant.Server.basePackage));
+    JerseyConfig jerseyConfig = new JerseyConfig(AppConstant.Server.basePackage);
+
+
+    Server server = JettyHttpContainerFactory.createServer(baseUri, jerseyConfig);
     server.start();
 
+    Set<Resource> resources = jerseyConfig.getResources();
+    System.out.println("================jersey resources================================");
+    for (Resource resource : resources) {
+      System.out.println(resource);
+    }
+    System.out.println("================server resources========================================");
+    Set<Resource> resources1 = jerseyConfig.getConfiguration().getResources();
+    for (Resource resource : resources1) {
+      System.out.println(resource);
+    }
+    System.out.println("================================================");
     logger.info("server started at {}:{} ",baseUri.getHost(),baseUri.getPort());
 
     someTest();

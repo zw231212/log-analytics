@@ -9,6 +9,10 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
+/**
+ * 拦截器有两种：ReaderInterceptor,WriterInterceptor
+ * reader用的不多,writer可以用来开启gzip压缩
+ */
 //@Provider
 public class GzipInterceptor implements WriterInterceptor {
   @Override

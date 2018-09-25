@@ -8,6 +8,9 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * ContainerRequestFilter :过滤请求前.
+ * ContainerResponseFilter :过滤请求后.
+ * 可以加@Priority 是用于表示该过滤器的执行顺序，其中参数为long类型，对于请求过滤器，该数值越小越先执行，响应过滤器则相反。
  * 跨域问题处理！
  */
 @Provider

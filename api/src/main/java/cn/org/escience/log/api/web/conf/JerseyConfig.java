@@ -1,5 +1,6 @@
 package cn.org.escience.log.api.web.conf;
 
+import cn.org.escience.log.api.web.interceptor.ServiceInterceptor;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;

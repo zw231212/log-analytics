@@ -39,7 +39,7 @@ public class BrowserController {
       @QueryParam("end") String end
   ){
 
-    System.out.println(uriInfo);
+    System.out.println(uriInfo.getMatchedResources());
     System.out.println(request);
     System.out.println(id);
     System.out.println(begin);

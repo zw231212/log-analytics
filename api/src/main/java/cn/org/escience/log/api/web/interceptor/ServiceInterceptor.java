@@ -13,11 +13,13 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.ReaderInterceptor;
 import javax.ws.rs.ext.ReaderInterceptorContext;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Provider
-public class ServiceInterceptor implements ReaderInterceptor {
+public class ServiceInterceptor implements ReaderInterceptor, MethodInterceptor {
 
   private static final Logger logger = LoggerFactory.getLogger(ServiceInterceptor.class);
 
@@ -50,6 +52,13 @@ public class ServiceInterceptor implements ReaderInterceptor {
     System.out.println("service 拦截器继续执行！");
     BaseService service = serviceManager.getService(id.toString());
     System.out.println(service);
-    return id;
+    Object proceed = context.proceed();
+    return proceed;
+  }
+
+  @Override
+  public Object invoke(MethodInvocation invocation) throws Throwable {
+    System.out.println("method 拦截器");
+    return invocation.proceed();
   }
 }
