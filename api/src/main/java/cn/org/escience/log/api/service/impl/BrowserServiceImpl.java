@@ -9,7 +9,6 @@ import java.util.List;
 
 public class BrowserServiceImpl extends BaseService implements BrowserService {
 
-
   private BrowserMapper browserMapper = sqlSession.getMapper(BrowserMapper.class);
 
   public BrowserServiceImpl(String database) {

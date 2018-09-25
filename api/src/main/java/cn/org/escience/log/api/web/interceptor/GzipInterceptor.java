@@ -8,13 +8,19 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * 拦截器有两种：ReaderInterceptor,WriterInterceptor
+ * 拦截器有两种：ReaderInterceptor,WriterInterceptor.
+ * they’re executed after the filters and only if a message body is present.
  * reader用的不多,writer可以用来开启gzip压缩
  */
-//@Provider
+@Provider
 public class GzipInterceptor implements WriterInterceptor {
+
+  private static final Logger logger = LoggerFactory.getLogger(GzipInterceptor.class);
+
   @Override
   public void aroundWriteTo(WriterInterceptorContext context)
       throws IOException, WebApplicationException {
@@ -26,6 +32,6 @@ public class GzipInterceptor implements WriterInterceptor {
     final OutputStream outputStream = context.getOutputStream();
     context.setOutputStream(new GZIPOutputStream(outputStream));
     context.proceed();
-    System.out.println("GZIP拦截器压缩");
+    logger.info("GZIP拦截器对返回资源进行压缩");
   }
 }

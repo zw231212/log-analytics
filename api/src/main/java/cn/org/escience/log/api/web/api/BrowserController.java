@@ -13,7 +13,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.handler.ContextHandler;
 
 /**
  * 测试查看是否能够走通到数据库
@@ -57,6 +56,7 @@ public class BrowserController {
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   public String getIt() {
+    System.out.println("info");
     return "Got it!";
   }
 

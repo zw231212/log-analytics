@@ -33,6 +33,7 @@ dependencies{
     compile project(":ddsdb")
     // mybatis
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+
     // jersey
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-http', version: '2.27'
     compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.27'
@@ -52,5 +53,6 @@ dependencies{
     //aspectjweaver
 //    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1'
 
-
+    // reflections
+//    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
 }

@@ -23,7 +23,7 @@ public class IndexController {
 
   @POST
   public IndexInfo indexPost(){
-
+    System.out.println(ii);
     return ii;
   }
 

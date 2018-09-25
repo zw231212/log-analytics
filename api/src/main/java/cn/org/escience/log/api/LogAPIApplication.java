@@ -36,24 +36,13 @@ public class LogAPIApplication {
     Server server = JettyHttpContainerFactory.createServer(baseUri, jerseyConfig);
     server.start();
 
-    Set<Resource> resources = jerseyConfig.getResources();
-    System.out.println("================jersey resources================================");
-    for (Resource resource : resources) {
-      System.out.println(resource);
-    }
-    System.out.println("================server resources========================================");
-    Set<Resource> resources1 = jerseyConfig.getConfiguration().getResources();
-    for (Resource resource : resources1) {
-      System.out.println(resource);
-    }
-    System.out.println("================================================");
     logger.info("server started at {}:{} ",baseUri.getHost(),baseUri.getPort());
 
     someTest();
   }
 
   public static void someTest(){
-    System.out.println("标准测试输出！");
+    System.out.println("启动服务后标准输出测试！");
     //jetty启动服务
 //    Server server = new Server(8989);
 //    server.setHandler(new BrowserController());

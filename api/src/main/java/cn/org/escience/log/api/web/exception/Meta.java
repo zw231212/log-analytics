@@ -21,4 +21,12 @@ public class Meta implements Serializable{
     public Meta(String msg){
         this.msg = msg;
     }
+
+    @Override
+    public String toString() {
+        return "Meta{" +
+            "code=" + code +
+            ", msg='" + msg + '\'' +
+            '}';
+    }
 }

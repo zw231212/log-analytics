@@ -35,11 +35,12 @@ public class ConnectionHolder {
    */
   private static Map<DataSource, Map<Integer,Connection>> connections = new HashMap<>();
 
-  private static ConnectionHolder connHolder = null;
+  private volatile static ConnectionHolder connHolder = null;
 
   private ConnectionHolder(){}
 
 
+  //换成静态内部类
   public static ConnectionHolder getInstance() {
     if(connHolder == null){
       synchronized (ConnectionHolder.class){
