@@ -33,7 +33,7 @@ public class BrowserController {
   @Path("/list/{id}")
   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public String getAll(@PathParam("id") String id,
+  public List<Browser> getAll(@PathParam("id") String id,
       @QueryParam("begin") String begin,
       @QueryParam("end") String end
   ){
@@ -44,8 +44,7 @@ public class BrowserController {
     System.out.println(begin);
     System.out.println(end);
     List<Browser> all = browserService.findAll();
-    System.out.println(all);
-    return "{\"id\":"+id+",\"name\":\"zzq!欢迎光临：baidu.com\"}";
+    return all;
   }
 
   /**
@@ -54,10 +53,10 @@ public class BrowserController {
    * @return String 以 text/plain 形式响应
    */
   @GET
-  @Produces(MediaType.TEXT_PLAIN)
+  @Produces({MediaType.TEXT_PLAIN,MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
   public String getIt() {
     System.out.println("info");
-    return "Got it!";
+    return "{\"id\":\"browser\",\"msg\":\"查找browser相关的api！\"}";
   }
 
 }

@@ -1,5 +1,6 @@
 package cn.org.escience.log.api.web.filter;
 
+import cn.org.escience.log.api.config.AppConstant.Server;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.ServiceManager;
 import cn.org.escience.log.api.utils.JSONUtil;
@@ -97,7 +98,8 @@ public class ServiceFilter implements ContainerRequestFilter {
       logger.info("service 过滤器，查询id不存在，进行过滤，不进行后续操作！");
       throw new AuthorizationException("请指定查询参数key id 的值！");
     }
-    String database = ids.get(0);
+    //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
+    String database = ids.get(0)+ Server.dbSuffix;
     injectService(uriInfo,database);
 
   }
