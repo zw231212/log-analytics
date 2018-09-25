@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>动态数据源日志信息服务项目</title>
+</head>
+<body>
+
+<h4>动态数据源日志信息服务项目</h4>
+<p>
+  version：1.0.0
+</p>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $(function () {
+      $.ajax({
+        url:"v1/browser/list/123123",
+        method:"GET",
+        type:"json",
+        data:{
+          "begin":"12312312",
+          "end":"1231231"
+        },
+        success:function(data){
+          console.log(data)
+        }
+      });
+  });
+</script>
+</body>
+</html>

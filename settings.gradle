@@ -1,0 +1,4 @@
+rootProject.name = 'log-analytics'
+include 'generator','api', 'ddsdb'
+        ''
+

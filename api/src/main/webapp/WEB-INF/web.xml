@@ -1,0 +1,42 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Jersey2.5 And Jetty9 服务支持！</display-name>
+  <!--1、通过加载resources包的形式，加载所有resources-->
+  <!--
+    <servlet>
+      <servlet-name>jersey_rest</servlet-name>
+      <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+      <init-param>
+          <param-name>jersey.config.server.provider.packages</param-name>
+          <param-value>com.lf.rest.resources</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>jersey_rest</servlet-name>
+      <url-pattern>/v1/*</url-pattern>
+  </servlet-mapping>-->
+
+  <!--2、通过加载配置文件，加载指定的resources-->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>jersey_rest</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>cn.org.escience.log.api.web.conf.JerseyConfig</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jersey_rest</servlet-name>
+    <url-pattern>/v1/*</url-pattern>
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--如果项目名字不是根目录root，这里的目录是可以写版本，也可以不写,不写的话全部的都会经过servlet来处理
+    所以index是看不了了，所以还是价格版本号，或者项目名称可以换一下
+    -->
+  </servlet-mapping>
+
+</web-app>

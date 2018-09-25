@@ -1,0 +1,56 @@
+
+apply plugin: 'idea'
+apply plugin: 'war'     //打jar包的话jersey会导致整个项目出问题
+description "对外日志统计查询项目"
+war {
+    archiveName 'api.war'
+    version '1.0.0'
+//    from 'api/build/dist'
+}
+
+
+
+//gradle默认只会把resource文件夹当成资源文件，如果你的mapper文件放在java目录，则编译后不会被进入编译输出目录
+sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]
+
+
+jar {
+    baseName = 'api'
+    version =  '1.0.0'
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                "Main-Class": "cn.org.escience.log.api.LogAPIApplication"
+        )
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    into('assets') {
+        from 'assets'
+    }
+}
+
+dependencies{
+    compile project(":ddsdb")
+    // mybatis
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+    // jersey
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-http', version: '2.27'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.27'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.27'
+    compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
+//    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-moxy', version: '2.27'
+//    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-processing', version: '2.27'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.27'
+    // jersey-container-servlet,加载这个下面是为了打war包的时候能够处理服务
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.27'
+
+    // jersey-server
+//    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.27'
+    //jetty-server
+    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.12.v20180830'
+
+    //aspectjweaver
+//    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1'
+
+
+}

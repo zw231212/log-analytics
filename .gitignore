@@ -1,0 +1,13 @@
+.settings
+.idea
+.gradle
+classes/
+.project
+**.iml
+target/**
+out/**
+*/target/**
+*/build/**
+*/classes/**
+*/out/**
+*/node_modules/**

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--这个文件只是当做测试来使用，最后使用还是自身的配置文件，且Configuration是java生成的-->
+    <!-- 元素首次出现必须符合下面的顺序 -->
+    <!-- (properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,
+    objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?) -->
+
+    <settings>
+        <!--下划线和驼峰的自动转换-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启查询缓存，全局开关：默认是true，如果它配成false，其余各个Mapper XML文件配成支持cache也没用。-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <mappers>
+        <!-- 扫描路径下的mapper映射文件 -->
+        <!--<mapper resource="mappers/UserMapper.xml"/>-->
+        <!--<mapper resource="cn.org.escience.log.api.mapper/*.xml"/>-->
+        <!--扫描包下的接口文件-->
+
+        <!--通过resource方法一次加载一个映射文件 -->
+        <!-- <mapper resource="mapper/UserMapper.xml"/> -->
+        <!-- 通过mapper接口加载单个 映射文件
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录 中
+        上边规范的前提是：使用的是mapper代理方法
+         -->
+        <!-- <mapper class="cn.itcast.mybatis.mapper.UserMapper"/> -->
+
+        <!-- 批量加载mapper
+        指定mapper接口的包名，mybatis自动扫描包下边所有mapper接口进行加载
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录中
+        上边规范的前提是：使用的是mapper代理方法
+         -->
+        <package name="cn.org.escience.log.api.mapper" />
+    </mappers>
+
+</configuration>
