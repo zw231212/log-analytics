@@ -10,6 +10,7 @@ public class AppConstant {
   public static final String  SERVER_NAME_KEY =       "server.name";
   public static final String  SERVER_DESCR_KEY =    "server.descr";
   public static final String  SERVER_VERSION_KEY =      "server.version";
+  public static final String  SERVER_DB_SUFFIX_KEY =      "server.dbSuffix";
   public static final String  MYBATIS_CAMELCASE_KEY =  "mybatis.mapUnderscoreToCamelCase";
   public static final String  MYBATIS_ENABLE_CACHE_KEY =  "mybatic.cacheEnabled";
   public static final String  MYBATIS_MAPPER_PACKAGE_KEY =  "mybati.mapperPackage";

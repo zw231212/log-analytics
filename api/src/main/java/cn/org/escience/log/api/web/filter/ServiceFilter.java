@@ -14,6 +14,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.server.ExtendedUriInfo;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +42,8 @@ public class ServiceFilter implements ContainerRequestFilter {
   @Context
   private ExtendedUriInfo uriInfo;
 
-//  private static Reflections relections =
-//      new Reflections("cn.org.escience.log.api");
+  private static Reflections relections =
+      new Reflections("cn.org.escience.log.api");
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
@@ -118,32 +120,34 @@ public class ServiceFilter implements ContainerRequestFilter {
         System.out.println(fieldClass);
         System.out.println(fieldClass.isAssignableFrom(BaseService.class));
 
-//        Set<Class<?>> implementionClass =
-//            (Set<Class<?>>) relections.getSubTypesOf(fieldClass);
+        Set<Class<?>> implementionClasses =
+            (Set<Class<?>>) relections.getSubTypesOf(fieldClass);
 
-//        System.out.println(implementionClass);
+        System.out.println(implementionClasses);
+        if(implementionClasses != null && implementionClasses.size() > 0) {
+          Class[] classes = new Class[implementionClasses.size()];
+          classes = implementionClasses.toArray(classes);
 
-        if(fieldClass.isAssignableFrom(BaseService.class)){
-          Class<? extends Class> aClass = fieldClass.getClass();
+          Class implementClass = classes[0];
+
           boolean containResult = sm.checkApiServices(database);
           BaseService service = null;
           boolean flag = false;
           if(containResult){
-            service = sm.getService(database, aClass);
+            service = sm.getService(database, fieldClass);
           }
           if(service == null){
-            Constructor<? extends Class> constructor = aClass.getConstructor(String.class);
+            Constructor<? extends Class> constructor = implementClass.getConstructor(String.class);
             Object obj = constructor.newInstance(database);
             service = (BaseService) obj;
             flag = true;
           }
           System.out.println(service);
           if(flag){
-            sm.putService(database, aClass, service);
+            sm.putService(database, fieldClass, service);
           }
           declaredField.set(matchedResource,service);
         }
-
       }
     }catch (Exception e){
 //      e.printStackTrace();
