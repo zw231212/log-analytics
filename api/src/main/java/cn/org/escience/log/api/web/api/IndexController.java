@@ -17,13 +17,11 @@ public class IndexController {
   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
   public IndexInfo indexGet(){
-    System.out.println(ii);
     return ii;
   }
 
   @POST
   public IndexInfo indexPost(){
-    System.out.println(ii);
     return ii;
   }
 

@@ -19,7 +19,7 @@ public class ServiceInterceptor implements ReaderInterceptor{
   @Override
   public Object aroundReadFrom(ReaderInterceptorContext context)
       throws IOException, WebApplicationException {
-    System.out.println("Service 拦截器！");
+    logger.debug("Service 拦截器！");
     return context.proceed();
   }
 }

@@ -19,7 +19,7 @@ public class JerseyConfig extends ResourceConfig {
     // 配置json转换。配置后如果api定义返回类型为json、且pojo注解XmlRootElement，将自动转为json返回；否则需要自己转换,
     register(JacksonJsonProvider.class);
     register(MultiPartFeature.class);
-    createClient();
+//    createClient();
     ////注册过滤器
 
     ///注册拦截器

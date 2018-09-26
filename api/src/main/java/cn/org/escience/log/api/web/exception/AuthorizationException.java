@@ -3,6 +3,9 @@ package cn.org.escience.log.api.web.exception;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 主要是检查id异常，也就是能否匹配得上数据库对于的数据库
+ */
 @Data
 @NoArgsConstructor
 public class AuthorizationException extends RuntimeException {

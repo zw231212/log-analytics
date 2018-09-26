@@ -14,7 +14,6 @@ public class GlobalExceptionMapper implements ExceptionMapper<Exception> {
 
     ResponseBuilder rb = null;
 //    e.printStackTrace();
-//    System.out.println("===========================================异常控制器内异常显示 end=======================================");
     Meta meta = null;
     if(e instanceof AuthorizationException){
       meta = ((AuthorizationException) e).getMeta();

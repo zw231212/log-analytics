@@ -48,7 +48,6 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
-    System.out.println("服务注入请求过滤器");
     String method = crc.getMethod().toUpperCase();
 //    UriInfo uriInfo = crc.getUriInfo();
 
@@ -104,12 +103,15 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   }
 
+  /**
+   * 给每个controller注入service
+   * @param uriInfo 匹配的url相关的信息
+   * @param database 要查询的数据库的名称
+   */
   private void injectService(UriInfo uriInfo, String database){
-    List<String> matchedURIs = uriInfo.getMatchedURIs();
-    System.out.println(matchedURIs);
     List<Object> matchedResources = uriInfo.getMatchedResources();
     if(matchedResources == null || matchedResources.size() == 0){
-//      throw new AuthorizationException("no matched resources found!");
+      throw new AuthorizationException("no matched resources found!");
     }
     try{
       Object matchedResource = uriInfo.getMatchedResources().get(0);
@@ -119,13 +121,10 @@ public class ServiceFilter implements ContainerRequestFilter {
       for (Field declaredField : declaredFields) {
         declaredField.setAccessible(true);
         Class<?> fieldClass = declaredField.getType();
-        System.out.println(fieldClass);
-        System.out.println(fieldClass.isAssignableFrom(BaseService.class));
 
         Set<Class<?>> implementionClasses =
             (Set<Class<?>>) relections.getSubTypesOf(fieldClass);
 
-        System.out.println(implementionClasses);
         if(implementionClasses != null && implementionClasses.size() > 0) {
           Class[] classes = new Class[implementionClasses.size()];
           classes = implementionClasses.toArray(classes);
@@ -133,6 +132,7 @@ public class ServiceFilter implements ContainerRequestFilter {
           Class implementClass = classes[0];
 
           boolean containResult = sm.checkApiServices(database);
+          
           BaseService service = null;
           boolean flag = false;
           if(containResult){
@@ -144,7 +144,6 @@ public class ServiceFilter implements ContainerRequestFilter {
             service = (BaseService) obj;
             flag = true;
           }
-          System.out.println(service);
           if(flag){
             sm.putService(database, fieldClass, service);
           }
@@ -152,7 +151,7 @@ public class ServiceFilter implements ContainerRequestFilter {
         }
       }
     }catch (Exception e){
-//      e.printStackTrace();
+      e.printStackTrace();
       logger.error(e.getMessage());
     }
   }

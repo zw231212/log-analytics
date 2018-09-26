@@ -32,6 +32,6 @@ public class GzipInterceptor implements WriterInterceptor {
     final OutputStream outputStream = context.getOutputStream();
     context.setOutputStream(new GZIPOutputStream(outputStream));
     context.proceed();
-    logger.info("GZIP拦截器对返回资源进行压缩");
+    logger.debug("GZIP拦截器对返回资源进行压缩!");
   }
 }

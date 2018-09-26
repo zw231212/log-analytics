@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 首页展示的描述性信息
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
