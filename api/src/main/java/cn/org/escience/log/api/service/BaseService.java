@@ -10,10 +10,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
+/**
+ * 每个service都必须继承的基础服务类
+ */
 public class BaseService {
 
   protected String database;//也就是传递的id
   protected SqlSession sqlSession;
+  private static ServiceManager sm = ServiceManager.getInstance();
 
   public BaseService(String database){
     this.database = database;
@@ -42,25 +46,15 @@ public class BaseService {
 
     SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(conf);
     sqlSession = ssf.openSession(true);
+    sm.addRelaseSession(sqlSession);
+
 
     //方法运行后
 //      sqlSession.commit();
 //      releaseSession(sqlSession);
   }
 
-  /**
-   * 释放资源
-   * @param sqlSession
-   */
-  public void releaseSession(SqlSession sqlSession){
-      try {
-        if(sqlSession != null){
-          sqlSession.close();
-        }
-      }  catch (Exception e){
-        e.printStackTrace();
-      }
-  }
+
 
   public SqlSession getSqlSession() {
     return sqlSession;

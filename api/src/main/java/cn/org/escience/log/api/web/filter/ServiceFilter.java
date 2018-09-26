@@ -48,11 +48,13 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
+    logger.debug("service 过滤器，检查查询id！");
     String method = crc.getMethod().toUpperCase();
 //    UriInfo uriInfo = crc.getUriInfo();
 
     switch (method) {
       case "POST":    //构造解析，将post数据转化为querystring
+        logger.debug("将 post 参数转换为querystring参数！");
         InputStream inputStream = crc.getEntityStream();
         URI uri = uriInfo.getRequestUri();
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -94,11 +96,14 @@ public class ServiceFilter implements ContainerRequestFilter {
 
     List<String> ids = params.get("id");
     if(ids == null || ids.size() == 0 || "".equals(ids.get(0).trim()) ){
-      logger.info("service 过滤器，查询id不存在，进行过滤，不进行后续操作！");
       throw new AuthorizationException("请指定查询参数key id 的值！");
     }
     //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
     String database = ids.get(0)+ Server.dbSuffix;
+
+    //先检查是否存在该数据库
+
+    //将service注入到每个controller
     injectService(uriInfo,database);
 
   }
@@ -109,6 +114,8 @@ public class ServiceFilter implements ContainerRequestFilter {
    * @param database 要查询的数据库的名称
    */
   private void injectService(UriInfo uriInfo, String database){
+
+    //获取匹配的controller，如果使用@PreMatching，则这里无法获取到匹配的resource
     List<Object> matchedResources = uriInfo.getMatchedResources();
     if(matchedResources == null || matchedResources.size() == 0){
       throw new AuthorizationException("no matched resources found!");
@@ -119,9 +126,11 @@ public class ServiceFilter implements ContainerRequestFilter {
 
       Field[] declaredFields = resource.getDeclaredFields();
       for (Field declaredField : declaredFields) {
+
         declaredField.setAccessible(true);
         Class<?> fieldClass = declaredField.getType();
 
+        //获取service接口的实现类
         Set<Class<?>> implementionClasses =
             (Set<Class<?>>) relections.getSubTypesOf(fieldClass);
 
@@ -135,10 +144,10 @@ public class ServiceFilter implements ContainerRequestFilter {
           
           BaseService service = null;
           boolean flag = false;
-          if(containResult){
+          if(containResult){ //从缓存里面获取服务接口数据
             service = sm.getService(database, fieldClass);
           }
-          if(service == null){
+          if(service == null){ //如果无法从缓存的service容器里面获取service，那么就放射生成
             Constructor<? extends Class> constructor = implementClass.getConstructor(String.class);
             Object obj = constructor.newInstance(database);
             service = (BaseService) obj;
@@ -147,7 +156,10 @@ public class ServiceFilter implements ContainerRequestFilter {
           if(flag){
             sm.putService(database, fieldClass, service);
           }
+          //给controller里面的service接口实例化
           declaredField.set(matchedResource,service);
+        }else{
+          throw new RuntimeException(fieldClass+ "  服务接口类没有实现类！");
         }
       }
     }catch (Exception e){
