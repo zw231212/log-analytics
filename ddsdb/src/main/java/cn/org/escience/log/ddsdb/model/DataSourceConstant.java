@@ -1,6 +1,7 @@
 package cn.org.escience.log.ddsdb.model;
 
 import cn.org.escience.log.ddsdb.config.DBPropertyLoader;
+import cn.org.escience.log.ddsdb.utils.StringUtil;
 
 public class DataSourceConstant {
   //关键字定义
@@ -16,15 +17,15 @@ public class DataSourceConstant {
   protected static final String DB_MINCONN_KEY = "minConn";
 
   //默认固定值配置读取
-  protected static String DEFAULT_HOST = DBPropertyLoader.get(DB_HOST_KEY);
-  protected static Integer DEFAULT_PORT = 3306;
-  protected static String DEFAULT_USER = DBPropertyLoader.get(DB_USER_KEY);
-  protected static String DEFAULT_PASS = DBPropertyLoader.get(DB_PASS_KEY);
-  protected static String DEFAULT_DIALECT = DBPropertyLoader.get(DB_DIALECT_KEY);
-  protected static String DEFAULT_QUERYSTRING = DBPropertyLoader.get(DB_QUERYSTRING_KEY);
-  protected static String DEFAULT_DRIVERCLASS = DBPropertyLoader.get(DB_DRIVER_CLASS_KEY);
-  protected static Integer DEFAULT_MAXCONN = 10;
-  protected static Integer DEFAULT_MINCONN = 2;
+  public static String DEFAULT_HOST = DBPropertyLoader.get(DB_HOST_KEY);
+  public static Integer DEFAULT_PORT = 3306;
+  public static String DEFAULT_USER = DBPropertyLoader.get(DB_USER_KEY);
+  public static String DEFAULT_PASS = DBPropertyLoader.get(DB_PASS_KEY);
+  public static String DEFAULT_DIALECT = DBPropertyLoader.get(DB_DIALECT_KEY);
+  public static String DEFAULT_QUERYSTRING = DBPropertyLoader.get(DB_QUERYSTRING_KEY);
+  public static String DEFAULT_DRIVERCLASS = DBPropertyLoader.get(DB_DRIVER_CLASS_KEY);
+  public static Integer DEFAULT_MAXCONN = 10;
+  public static Integer DEFAULT_MINCONN = 2;
 
   protected static String DB_URL = "jdbc:{"+DB_DIALECT_KEY+"}://{"+DB_HOST_KEY+"}:{"+DB_PORT_KEY+"}/{"+DB_DATABASE_KEY+"}";
 
@@ -40,6 +41,10 @@ public class DataSourceConstant {
     }
     if(minConnStr != null && !"".equals(minConnStr.trim())){
       DEFAULT_MINCONN = Integer.parseInt(minConnStr);
+    }
+
+    if(StringUtil.isNullOrBlank(DEFAULT_DRIVERCLASS)){
+      DEFAULT_DRIVERCLASS = "com.mysql.jdbc.Driver";
     }
 
   }

@@ -1,5 +1,6 @@
 package cn.org.escience.log.ddsdb.utils;
 
+import cn.org.escience.log.ddsdb.model.DataSourceConstant;
 import cn.org.escience.log.ddsdb.model.DynamicDataSource;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -96,6 +97,12 @@ public class JdbcUtil {
     url += "createDatabaseIfNotExist=true";
     dds.setUrl(url);
     Connection conn = getConnection(dds);
+    try{
+      conn.commit();
+    }catch (Exception e){
+      e.printStackTrace();
+      return false;
+    }
     boolean flag = conn!=null;
     releaseConnection(flag,conn,dds);
     return flag;
@@ -147,17 +154,18 @@ public class JdbcUtil {
   /**
    * 加载驱动
    */
-  public static void loadDriver(String driverClass){
+  public static Driver getDriver(String driverClass){
     if(driverClass == null || "".equals(driverClass.trim())){
-      return;
+      driverClass = DataSourceConstant.DEFAULT_DRIVERCLASS;
     }
     try {
       Class<?> aClass = Class.forName(driverClass);
       Driver driver = (Driver) aClass.newInstance();
-      DriverManager.registerDriver(driver);
+      return driver;
     } catch (Exception e) {
       logger.error("数据库驱动信息加载失败，如果驱动比较高，可以自动加载驱动，不会影响使用！");
       e.printStackTrace();
+      return null;
     }
   }
 
@@ -168,9 +176,13 @@ public class JdbcUtil {
   public static Connection getConnection(DynamicDataSource dds) {
 
     // 加载驱动
-    loadDriver(dds.getDriverClass());
+    Driver driver = getDriver(dds.getDriverClass());
+    if(driver == null){
+      driver = getDriver(DataSourceConstant.DEFAULT_DRIVERCLASS);
+    }
     try {
       // 获取连接
+      DriverManager.registerDriver(driver);
       Connection conn = DriverManager
           .getConnection(dds.getUrl(), dds.getUser(), dds.getPass());
       return conn;
