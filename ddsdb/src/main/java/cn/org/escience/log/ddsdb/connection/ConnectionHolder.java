@@ -37,19 +37,17 @@ public class ConnectionHolder {
 
   private volatile static ConnectionHolder connHolder = null;
 
+  /**
+   * 整个项目中只能有一个数据库连接控制器
+   */
   private ConnectionHolder(){}
 
+  public static class ConnectionHolderHelper{
+    private static final ConnectionHolder cnInstance = new ConnectionHolder();
+  }
 
-  //换成静态内部类
   public static ConnectionHolder getInstance() {
-    if(connHolder == null){
-      synchronized (ConnectionHolder.class){
-        if(connHolder==null){
-          return new ConnectionHolder();
-        }
-      }
-    }
-    return connHolder;
+    return ConnectionHolderHelper.cnInstance;
   }
 
   public DataSource getDataSource(String id) {
@@ -145,10 +143,6 @@ public class ConnectionHolder {
           return connValues.toArray(connArr)[randomIndex];
         }
       }
-
-
-
-
     }
     return getConnectionFromDatabase(dds);
 
