@@ -30,17 +30,12 @@ public class BrowserController {
 
 
   @GET
-  @Path("/list/{id}")
+  @Path("/list")
   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
   @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-  public List<Browser> getAll(@PathParam("id") String id,
-      @QueryParam("begin") String begin,
-      @QueryParam("end") String end
-  ){
+  public List<Browser> getAll(@QueryParam("begin") String begin,
+      @QueryParam("end") String end){
 
-    System.out.println(uriInfo.getMatchedResources());
-    System.out.println(request);
-    System.out.println(id);
     System.out.println(begin);
     System.out.println(end);
     List<Browser> all = browserService.findAll();

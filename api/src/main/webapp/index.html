@@ -14,12 +14,12 @@
 <script>
   $(function () {
       $.ajax({
-        url:"v1/browser/list/123123",
+        url:"v1/browser/list?id=share.com",
         method:"GET",
         type:"json",
         data:{
-          "begin":"12312312",
-          "end":"1231231"
+          "begin":"2018-01-01",
+          "end":"2018-09-02"
         },
         success:function(data){
           console.log(data)

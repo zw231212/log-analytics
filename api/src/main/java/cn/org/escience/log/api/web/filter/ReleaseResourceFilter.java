@@ -19,7 +19,7 @@ public class ReleaseResourceFilter  implements ContainerResponseFilter {
   @Override
   public void filter(ContainerRequestContext requestContext,
       ContainerResponseContext responseContext) throws IOException {
-    sm.releaseAllSessions();
+//    sm.releaseAllSessions();
     logger.debug("资源释放信息返回过滤器");
 
   }

@@ -6,6 +6,8 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ContainerRequestFilter :过滤请求前.
@@ -18,9 +20,11 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ApiServiceCorsFilter implements ContainerResponseFilter {
 
+  private static final Logger logger  = LoggerFactory.getLogger(ApiServiceCorsFilter.class);
+
   public void filter(ContainerRequestContext creq, ContainerResponseContext cres)
       throws IOException {
-    System.out.println("跨域服务信息返回过滤器");
+    logger.debug("跨域服务信息返回过滤器");
     cres.getHeaders().add("Access-Control-Allow-Origin", Cros.allowOrigin);
     cres.getHeaders().add("Access-Control-Allow-Headers", Cros.allowHeaders);
     cres.getHeaders().add("Access-Control-Allow-Credentials", Cros.allowCredentials);

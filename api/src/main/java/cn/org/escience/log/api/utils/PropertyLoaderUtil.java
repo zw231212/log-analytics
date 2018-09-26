@@ -9,16 +9,31 @@ import java.util.Properties;
 public class PropertyLoaderUtil {
 
   public static Properties load(String resourcePath){
+    InputStream in = null;
+    InputStreamReader isr = null;
     try{
       // 使用ClassLoader加载properties配置文件生成对应的输入流
-      InputStream in = PropertyLoaderUtil.class.getResourceAsStream(resourcePath);
-      InputStreamReader isr = new InputStreamReader(in, "UTF-8");
+      in = PropertyLoaderUtil.class.getResourceAsStream(resourcePath);
+      isr = new InputStreamReader(in, "GBK");
       // 使用properties对象加载输入流
       Properties properties = new Properties();
       properties.load(isr);
       return properties;
     }catch (Exception e){
       e.printStackTrace();
+    }finally {
+      try{
+        if(isr != null){
+          isr.close();
+        }
+
+        if(in != null){
+          in.close();
+        }
+
+      } catch (Exception e){
+
+      }
     }
     return null;
   }

@@ -13,7 +13,8 @@ public class GlobalExceptionMapper implements ExceptionMapper<Exception> {
   public Response toResponse(Exception e) {
 
     ResponseBuilder rb = null;
-//    e.printStackTrace();
+    e.printStackTrace();
+    System.out.println("==========================异常控制器输出=================================================");
     Meta meta = null;
     if(e instanceof AuthorizationException){
       meta = ((AuthorizationException) e).getMeta();

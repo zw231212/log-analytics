@@ -11,9 +11,10 @@ public class AppConstant {
   public static final String  SERVER_DESCR_KEY =    "server.descr";
   public static final String  SERVER_VERSION_KEY =      "server.version";
   public static final String  SERVER_DB_SUFFIX_KEY =      "server.dbSuffix";
+  public static final String  SERVER_CONTEXT_PATH_KEY =      "server.contextPath";
   public static final String  MYBATIS_CAMELCASE_KEY =  "mybatis.mapUnderscoreToCamelCase";
-  public static final String  MYBATIS_ENABLE_CACHE_KEY =  "mybatic.cacheEnabled";
-  public static final String  MYBATIS_MAPPER_PACKAGE_KEY =  "mybati.mapperPackage";
+  public static final String  MYBATIS_ENABLE_CACHE_KEY =  "mybatis.cacheEnabled";
+  public static final String  MYBATIS_MAPPER_PACKAGE_KEY =  "mybatis.mapperPackage";
   public static final String  MYBATIS_LAZYLOADING_KEY =  "mybatis.lazyLoadingEnable";
   public static final String  CROS_ALLOW_ORIGIN_KEY =  "cors.allowOrigin";
   public static final String  CROS_ALLOW_HEADERS_KEY =  "cors.allowHeaders";
@@ -37,6 +38,7 @@ public class AppConstant {
      public static int port = 8080;
      public static String  basePackage = ApplicationConfiguration.get(SERVER_BASE_PACKAGE_KEY);
      public static String  dbSuffix = ApplicationConfiguration.get(SERVER_DB_SUFFIX_KEY);
+     public static String  conetxtPath = ApplicationConfiguration.get(SERVER_CONTEXT_PATH_KEY);
      static {
           String portStr =  ApplicationConfiguration.get(SERVER_PORT_KEY);
           if(!StringUtil.isNullOrBlank(portStr)){

@@ -1,17 +1,23 @@
 
-apply plugin: 'idea'
-apply plugin: 'war'     //打jar包的话jersey会导致整个项目出问题
+//apply plugin: 'idea'
+//apply plugin: 'war'     //打jar包的话jersey会导致整个项目出问题
+plugins {
+    id "idea"
+    id "war"
+}
 description "对外日志统计查询项目"
 war {
     archiveName 'api.war'
-//    from 'api/build/dist'
+    from('src/main/java') {
+        exclude '**/*.xml'
+        exclude "**/.placeholder"
+    }
 }
 
 
 
 //gradle默认只会把resource文件夹当成资源文件，如果你的mapper文件放在java目录，则编译后不会被进入编译输出目录
 sourceSets.main.resources.srcDirs = ["src/main/java","src/main/resources"]
-
 
 jar {
     baseName = 'api'
@@ -48,6 +54,12 @@ dependencies{
 //    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.27'
     //jetty-server
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.12.v20180830'
+    // jersey-servlet
+//    compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.4'
+
+    // guice-servlet
+//    compile group: 'com.google.inject.extensions', name: 'guice-servlet', version: '4.2.1'
+
 
     //aspectjweaver
 //    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.1'

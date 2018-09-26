@@ -48,63 +48,77 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
-    logger.debug("service 过滤器，检查查询id！");
+
     String method = crc.getMethod().toUpperCase();
 //    UriInfo uriInfo = crc.getUriInfo();
 
-    switch (method) {
-      case "POST":    //构造解析，将post数据转化为querystring
-        logger.debug("将 post 参数转换为querystring参数！");
-        InputStream inputStream = crc.getEntityStream();
-        URI uri = uriInfo.getRequestUri();
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuffer rqbody = new StringBuffer() ;
-        String line = "" ;
-        while((line = br.readLine()) != null){
-          rqbody.append(line) ;
-        }
-        String qs = rqbody.toString();
-        String appendQs = null;
-        if(!qs.contains("&")){
-          String s = JSONUtil.jsonStr2Querytring(qs);
-          if(s != null) {
-             appendQs = s;
+    String path = uriInfo.getPath();
+    logger.info("service 过滤器，检查查询id！"+path);
+    boolean flag = false;//是否是首页
+    String conetxtPath = Server.conetxtPath;
+    if(StringUtil.isNullOrBlank(conetxtPath)){
+      conetxtPath = "/";
+    }
+    if(StringUtil.isNullOrBlank(path) || conetxtPath.equals(path.trim())){
+      flag = true;
+    }
+
+    //path是为空的话，是访问首页
+    if(!flag){
+      switch (method) {
+        case "POST":    //构造解析，将post数据转化为querystring
+          logger.debug("将 post 参数转换为querystring参数！");
+          InputStream inputStream = crc.getEntityStream();
+          URI uri = uriInfo.getRequestUri();
+          BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+          StringBuffer rqbody = new StringBuffer() ;
+          String line = "" ;
+          while((line = br.readLine()) != null){
+            rqbody.append(line) ;
           }
-        }else{
-          appendQs = qs;
-        }
-        String query = uri.getQuery();
-        if(StringUtil.isNullOrBlank(query)){
-          query = appendQs;
-        } else {
-          query += "&"+appendQs;
-        }
+          String qs = rqbody.toString();
+          String appendQs = null;
+          if(!qs.contains("&")){
+            String s = JSONUtil.jsonStr2Querytring(qs);
+            if(s != null) {
+              appendQs = s;
+            }
+          }else{
+            appendQs = qs;
+          }
+          String query = uri.getQuery();
+          if(StringUtil.isNullOrBlank(query)){
+            query = appendQs;
+          } else {
+            query += "&"+appendQs;
+          }
 
-        uri = UriBuilder.fromUri(uri).replaceQuery(query).build();
-        crc.setRequestUri(uri);
-        break;
-      case "GET":
-        break;
-      default:
+          uri = UriBuilder.fromUri(uri).replaceQuery(query).build();
+          crc.setRequestUri(uri);
+          break;
+        case "GET":
+          break;
+        default:
           throw new RuntimeException("only get and post method is supported!");
+      }
+
+      MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
+      if(params == null || params.size() == 0){
+        throw new AuthorizationException(Message.PARAMS_LOSE);
+      }
+
+      List<String> ids = params.get("id");
+      if(ids == null || ids.size() == 0 || "".equals(ids.get(0).trim()) ){
+        throw new AuthorizationException("请指定查询参数key id 的值！");
+      }
+      //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
+      String database = ids.get(0)+ Server.dbSuffix;
+
+      //先检查是否存在该数据库
+
+      //将service注入到每个controller
+      injectService(uriInfo,database);
     }
-
-    MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
-    if(params == null || params.size() == 0){
-      throw new AuthorizationException(Message.PARAMS_LOSE);
-    }
-
-    List<String> ids = params.get("id");
-    if(ids == null || ids.size() == 0 || "".equals(ids.get(0).trim()) ){
-      throw new AuthorizationException("请指定查询参数key id 的值！");
-    }
-    //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
-    String database = ids.get(0)+ Server.dbSuffix;
-
-    //先检查是否存在该数据库
-
-    //将service注入到每个controller
-    injectService(uriInfo,database);
 
   }
 
@@ -130,6 +144,8 @@ public class ServiceFilter implements ContainerRequestFilter {
         declaredField.setAccessible(true);
         Class<?> fieldClass = declaredField.getType();
 
+
+
         //获取service接口的实现类
         Set<Class<?>> implementionClasses =
             (Set<Class<?>>) relections.getSubTypesOf(fieldClass);
@@ -139,7 +155,11 @@ public class ServiceFilter implements ContainerRequestFilter {
           classes = implementionClasses.toArray(classes);
 
           Class implementClass = classes[0];
-
+          //查看是否有继承BaseService
+          Class<?> superclass = implementClass.getSuperclass();
+          if(superclass != BaseService.class){
+            continue;
+          }
           boolean containResult = sm.checkApiServices(database);
           
           BaseService service = null;
@@ -158,8 +178,6 @@ public class ServiceFilter implements ContainerRequestFilter {
           }
           //给controller里面的service接口实例化
           declaredField.set(matchedResource,service);
-        }else{
-          throw new RuntimeException(fieldClass+ "  服务接口类没有实现类！");
         }
       }
     }catch (Exception e){

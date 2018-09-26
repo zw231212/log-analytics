@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement
+//@XmlRootElement
 public class IndexInfo implements Serializable {
   private String host = Server.uri;
   private int port = Server.port;
