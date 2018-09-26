@@ -38,7 +38,7 @@ public class AppConstant {
      public static int port = 8080;
      public static String  basePackage = ApplicationConfiguration.get(SERVER_BASE_PACKAGE_KEY);
      public static String  dbSuffix = ApplicationConfiguration.get(SERVER_DB_SUFFIX_KEY);
-     public static String  conetxtPath = ApplicationConfiguration.get(SERVER_CONTEXT_PATH_KEY);
+     public static String  contextPath = ApplicationConfiguration.get(SERVER_CONTEXT_PATH_KEY);
      static {
           String portStr =  ApplicationConfiguration.get(SERVER_PORT_KEY);
           if(!StringUtil.isNullOrBlank(portStr)){

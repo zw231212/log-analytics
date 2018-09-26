@@ -1,5 +1,6 @@
 package cn.org.escience.log.api.web.exception;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -18,9 +19,12 @@ public class GlobalExceptionMapper implements ExceptionMapper<Exception> {
     Meta meta = null;
     if(e instanceof AuthorizationException){
       meta = ((AuthorizationException) e).getMeta();
-    }else{
+    }else  if(e instanceof NotFoundException){
+      meta = Message.NOT_FOUND;
+    } else{
       meta = Message.error(e.toString());
     }
+
     rb = Response.ok(meta, MediaType.APPLICATION_JSON_TYPE);
 
 

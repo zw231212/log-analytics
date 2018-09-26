@@ -1,5 +1,6 @@
 package cn.org.escience.log.api.web.filter;
 
+import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.api.config.AppConstant.Server;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.ServiceManager;
@@ -44,7 +45,7 @@ public class ServiceFilter implements ContainerRequestFilter {
   private ExtendedUriInfo uriInfo;
 
   private static Reflections relections =
-      new Reflections("cn.org.escience.log.api");
+      new Reflections(Server.basePackage+".service");
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
@@ -55,7 +56,7 @@ public class ServiceFilter implements ContainerRequestFilter {
     String path = uriInfo.getPath();
     logger.info("service 过滤器，检查查询id！"+path);
     boolean flag = false;//是否是首页
-    String conetxtPath = Server.conetxtPath;
+    String conetxtPath = Server.contextPath;
     if(StringUtil.isNullOrBlank(conetxtPath)){
       conetxtPath = "/";
     }

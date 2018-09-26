@@ -9,12 +9,13 @@ import cn.org.escience.log.api.web.interceptor.ServiceInterceptor;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-@ApplicationPath("/log")
+//@ApplicationPath("/log")
 public class JerseyConfig extends ResourceConfig{
 
   private String basePackage = AppConstant.Server.basePackage;
@@ -30,7 +31,6 @@ public class JerseyConfig extends ResourceConfig{
     register(MultiPartFeature.class);
 //    createClient();
     ////注册过滤器
-
     ///注册拦截器
 //    register(ServiceInterceptor.class);
 //    register(GzipInterceptor.class); //或者增加@Provider注解也可以注册

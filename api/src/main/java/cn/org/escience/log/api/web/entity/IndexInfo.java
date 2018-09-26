@@ -20,5 +20,6 @@ public class IndexInfo implements Serializable {
   private String name = Server.name;
   private String descr = Server.descr;
   private String version = Server.version;
+  private String contextPath = Server.contextPath;
 }
 
