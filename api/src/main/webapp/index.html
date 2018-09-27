@@ -204,11 +204,11 @@ bg-white border-bottom shadow-sm">
 <script src="static/js/vue/vue-resource.min.js"></script>
 <script>
   var dbs = [{name:"共享杯",id:"share.com"}, {name:"平台1",id:"2005dka10100"}];
-
+  var version = "v1";
   var apis = [
       {
         "name":"获取每月或者每年或者每日的基本数据",
-        "api":"v1/browser/list",
+        "api":version+"/general/list",
         "params":{//请求参数
           "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
           "year":"年份，XXXX四位数字来表示",
@@ -243,7 +243,7 @@ bg-white border-bottom shadow-sm">
       },
     {
      "name":"参观者的区域信息",
-      "api":"",
+      "api":version+"/area/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -260,7 +260,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"参观者的IP信息",
-      "api":"",
+      "api":version+"/host/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -278,7 +278,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"搜索引擎机器人",
-      "api":"",
+      "api":version+"/robots/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -295,7 +295,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"每次参观所花时间",
-      "api":"",
+      "api":version+"/session/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -309,7 +309,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"文件类别",
-      "api":"",
+      "api":version+"/filetypes/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -324,7 +324,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"网站的参观的URL",
-      "api":"",
+      "api":version+"/pages/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -344,7 +344,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"操作系统数据",
-      "api":"",
+      "api":version+"/os/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -366,7 +366,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"浏览器数据",
-      "api":"",
+      "api":version+"/browser/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -388,7 +388,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"错误统计数据",
-      "api":"",
+      "api":version+"/error/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -405,7 +405,7 @@ bg-white border-bottom shadow-sm">
     },
     {
       "name":"错误详情数据",
-      "api":"",
+      "api":version+"/error/detail",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
         "year":"年份，XXXX四位数字来表示",
@@ -461,6 +461,23 @@ bg-white border-bottom shadow-sm">
       }
     });
   }
+
+  //将json数据转换为querystring
+  function json2Querystring(data) {
+    try {
+      var tempArr = [];
+      for (var i in data) {
+        var key = encodeURIComponent(i);
+        var value = encodeURIComponent(data[i]);
+        tempArr.push(key + '=' + value);
+      }
+      var urlParamsStr = tempArr.join('&');
+      return urlParamsStr;
+    } catch (err) {
+      return '';
+    }
+  }
+
 
   //格式化显示json数据
   function syntaxHighlight(json) {
