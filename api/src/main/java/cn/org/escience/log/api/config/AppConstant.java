@@ -4,6 +4,8 @@ import cn.org.escience.log.ddsdb.utils.StringUtil;
 
 public class AppConstant {
 
+  public static final String  MODULE_NAME_KEY =  "module.name";
+  public static final String  MODULE_RESOURCE_KEY =  "module.resources";
   public static final String  SERVER_URI_KEY =  "server.uri";
   public static final String  SERVER_PORT_KEY =  "server.port";
   public static final String  SERVER_BASE_PACKAGE_KEY =   "server.basePackage";
@@ -22,6 +24,11 @@ public class AppConstant {
   public static final String  CROS_ALLOW_METHODS_KEY =  "cors.allowMethods";
   public static final String  CROS_MAXAGE_KEY =  "cors.maxAge";
 
+
+  public static class Module{
+    public static String name = ApplicationConfiguration.get(MODULE_NAME_KEY);
+    public static String resources = ApplicationConfiguration.get(MODULE_RESOURCE_KEY);
+  }
 
 
 

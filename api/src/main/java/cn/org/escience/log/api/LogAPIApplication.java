@@ -2,6 +2,7 @@ package cn.org.escience.log.api;
 
 
 import cn.org.escience.log.api.config.AppConstant;
+import cn.org.escience.log.api.config.AppConstant.Module;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
@@ -43,7 +44,8 @@ public class LogAPIApplication {
 
     WebAppContext webAppContext = new WebAppContext();
     webAppContext.setContextPath(contextPath);
-    webAppContext.setResourceBase("api/src/main/webapp");
+    String resourceBase = Module.name+"/"+Module.resources;
+    webAppContext.setResourceBase(resourceBase);
 
     HandlerList handlerList = new HandlerList();
     handlerList.setHandlers(new Handler[]{
@@ -75,6 +77,16 @@ public class LogAPIApplication {
     } finally {
       server.destroy();
     }
+  }
+
+  private static String getModuleName(){
+    String userDir = System.getProperty("user.dir");
+    int lastIndex = userDir.lastIndexOf("/");
+    return userDir.substring(lastIndex+1);
+  }
+
+  private static String getUserDir(){
+    return System.getProperty("user.dir");
   }
 
   public static void someTest(){
