@@ -10,6 +10,13 @@
     [v-cloak]{
       display: none;
     }
+    pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }
+
   </style>
 </head>
 <body>
@@ -87,7 +94,11 @@ bg-white border-bottom shadow-sm">
       <button style="margin-bottom: 17px;" class="btn btn-outline-primary">查询</button>
     </div>
   </div>
-  
+   <br />
+  <p>若是有分页，分页的数据页码是固定的</p>
+  <div>
+    <pre id="api-info-area"></pre>
+  </div>
   <hr />
   <div style="background-color: #b8daff;">
     <h5 style="color: #005cbf;">
@@ -438,7 +449,7 @@ bg-white border-bottom shadow-sm">
 
   });
   console.log(dbs)
-
+  $('#api-info-area').html(syntaxHighlight(apis[0]));
   function getBrowserInfo(id){
     $.ajax({
       url:"v1/browser/list?id="+id,
@@ -451,6 +462,29 @@ bg-white border-bottom shadow-sm">
       success:function(data){
         console.log(data)
       }
+    });
+  }
+
+  //格式化显示json数据
+  function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+      json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+      var cls = 'number';
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'key';
+        } else {
+          cls = 'string';
+        }
+      } else if (/true|false/.test(match)) {
+        cls = 'boolean';
+      } else if (/null/.test(match)) {
+        cls = 'null';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
     });
   }
 </script>
