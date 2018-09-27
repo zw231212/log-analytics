@@ -10,7 +10,18 @@
   6、400与500类型的页面url
   7、访问的全部日志
   ```
-  运行方式，gradle build jar，然后运行jar
+
+运行方式
+--------------
+  （1）gradle build jar，然后运行jar(后期整合tomcat以及war包以及静态资源等问题后出现了问题)；
+ 
+  （2）gradle build war，然后tomcat运行；
+ 
+  （3）直接运行LogAPIApplication主函数；
+  
+  （4）IDEA tomcat中添加项目进行运行；
+  
+  在开发的时候注释掉default servlet，以便于在修改HTML等文件的时候需要重启；
   
 ### 数据模型说明
 
