@@ -39,9 +39,10 @@ public class LogAPIApplication2 {
 
     WebAppContext webAppContext = new WebAppContext();
     webAppContext.setContextPath("/api123");
-    webAppContext.setResourceBase("api/src/main/resources/");
+    webAppContext.setResourceBase("api/src/main/webapp");
+//    webAppContext.setOverrideDescriptor("api/src/main/webapp/WEB-INF/web.xml");
 //    webAppContext.setServletHandler(serHol.getServletHandler());
-    webAppContext.addServlet(serHol,"/v1/*");
+//    webAppContext.addServlet(serHol,"/v1/*");
 
     HandlerList handlerList = new HandlerList();
     handlerList.setHandlers(new Handler[]{

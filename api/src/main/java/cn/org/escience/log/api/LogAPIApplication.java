@@ -2,45 +2,29 @@ package cn.org.escience.log.api;
 
 
 import cn.org.escience.log.api.config.AppConstant;
-import cn.org.escience.log.api.web.conf.JerseyConfig;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
-import java.net.InetAddress;
 import java.net.URI;
-import javax.ws.rs.core.Application;
+import java.net.URL;
 import javax.ws.rs.core.UriBuilder;
 import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.HandlerWrapper;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.jetty.JettyHttpContainer;
-import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
-import org.glassfish.jersey.server.ApplicationHandler;
-import org.glassfish.jersey.server.ContainerRequest;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 开启服务，加载基础数据
+ * main方法开启jetty服务，加载基础数据
  */
 public class LogAPIApplication {
 
   private static final Logger logger = LoggerFactory.getLogger(LogAPIApplication.class);
 
   public static void main(String[] args) throws Exception {
-    // 获取资源文件目录
-    String resourcePath = LogAPIApplication.class.getClass()
-        .getResource("/").getPath();
-    resourcePath = resourcePath.substring(0,resourcePath.length()-1);
-    int lastIndex = resourcePath.lastIndexOf("/");
-    resourcePath = resourcePath.substring(0,lastIndex)+"/resources";
 
     long begin = System.currentTimeMillis();
     //获取配置文件信息,在config里面的AppConstant
@@ -54,53 +38,44 @@ public class LogAPIApplication {
     }
 
     Server server =new Server(AppConstant.Server.port);
+    ServletHolder serHol = new ServletHolder(ServletContainer.class);
+    serHol.setInitOrder(1);
+    serHol.setInitParameter("javax.ws.rs.Application", "cn.org.escience.log.api.web.conf.JerseyConfig");
 
-    //设置context path
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-    context.setContextPath(contextPath);
-
-    server.setHandler(context);
-
-    ServletHolder servlet = context.addServlet(ServletContainer.class,"/v1/*");
-    servlet.setInitOrder(1);
-    servlet.setInitParameter("jersey.config.server.provider.packages",
-        AppConstant.Server.basePackage);
-    servlet.setInitParameter("javax.ws.rs.Application",
-        "cn.org.escience.log.api.web.conf.JerseyConfig");
-
-    //设置资源文件路径
-    HandlerWrapper wrapper = new HandlerWrapper();
-    context.insertHandler(wrapper);
-
-    ResourceHandler resourceHandler = new ResourceHandler();
-    resourceHandler.setDirectoriesListed(false);
-    resourceHandler.setWelcomeFiles(new String[]{"index.html"});
-    resourceHandler.setResourceBase(resourcePath);
+    WebAppContext webAppContext = new WebAppContext();
+    webAppContext.setContextPath(contextPath);
+    webAppContext.setResourceBase("api/src/main/webapp");
 
     HandlerList handlerList = new HandlerList();
-    handlerList.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-    wrapper.setHandler(handlerList);
+    handlerList.setHandlers(new Handler[]{
+        webAppContext,
+        new DefaultHandler()}
+        );
 
-        //JettyHttpContainerFactory.createServer(baseUri, jerseyConfig, false);
-    server.setHandler(context);
 
-    String uri = server.getURI().toString();
+    server.setHandler(handlerList);
 
-    System.out.println(uri);
+    /**
+     * 如果根据server.getURI获取的port是-1，所以才有下面这些操作
+     */
+    //获取server运行的实际的端口，其实和指定的一样，但是这里是根据这样的来直接获取
+    ServerConnector connector = (ServerConnector) server.getConnectors()[0];
+    int port = connector.getPort();
 
-    System.out.println(server);
+    //根据获取的端口来构建一个服务初始的url
+    URI uri = server.getURI();
+    uri = UriBuilder.fromUri(uri).port(port).build();
+
     try {
       server.start();
+      long end = System.currentTimeMillis();
+      logger.info("server started at {},用时：{} ms ", uri.toURL().toString(), (end - begin));
       server.join();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
       server.destroy();
     }
-    long end = System.currentTimeMillis();
-    logger.info("server started at {},用时：{} ms ", uri, (end - begin));
-
-//    someTest();
   }
 
   public static void someTest(){
@@ -128,6 +103,32 @@ public class LogAPIApplication {
     // SimpleContainerFactory.create(URI.create(BASE_URI), new
     // RestApplication());
 
+    /**
+     * //设置context path
+     *     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+     *     context.setContextPath(contextPath);
+     *
+     *     server.setHandler(context);
+     *
+     *     ServletHolder servlet = context.addServlet(ServletContainer.class,"/v1/*");
+     *     servlet.setInitOrder(1);
+     *     servlet.setInitParameter("jersey.config.server.provider.packages",
+     *         AppConstant.Server.basePackage);
+     *     servlet.setInitParameter("javax.ws.rs.Application",
+     *         "cn.org.escience.log.api.web.conf.JerseyConfig");
+     *
+     *     //设置资源文件路径
+     *     HandlerWrapper wrapper = new HandlerWrapper();
+     *     context.insertHandler(wrapper);
+     *
+     *     ResourceHandler resourceHandler = new ResourceHandler();
+     *     resourceHandler.setDirectoriesListed(false);
+     *     resourceHandler.setWelcomeFiles(new String[]{"index.html"});
+     *     resourceHandler.setResourceBase(resourcePath);
+     *
+     *     //JettyHttpContainerFactory.createServer(baseUri, jerseyConfig, false);
+     *
+     */
   }
 
 }
