@@ -50,7 +50,7 @@ dependencies{
     // jersey-container-servlet,加载这个下面是为了打war包的时候能够处理服务
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.27'
     // jersey-servlet
-    compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.4'
+//    compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.4'
 
     // jersey-server
 //    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.27'

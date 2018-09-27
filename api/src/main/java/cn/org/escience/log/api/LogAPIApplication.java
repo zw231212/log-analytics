@@ -4,7 +4,6 @@ package cn.org.escience.log.api;
 import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.net.URI;
-import java.net.URL;
 import javax.ws.rs.core.UriBuilder;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
