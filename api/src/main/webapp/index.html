@@ -56,19 +56,16 @@ bg-white border-bottom shadow-sm">
     <div class="col-md-3">
       <select id="database" class="form-control">
         <option value="-1">请选择日志所属网站</option>
-        <option value="share.com">共享网</option>
-        <option value="2005dka10100">平台1</option>
+        <template v-for="item in dbs">
+          <option value="{{item.id}}">{{item.name}}</option>
+        </template>
       </select>
       <br />
       <select id="rest-api-select" class="form-control">
         <option value="-1">请选择查看的数据</option>
-        <option value="">基本统计数据</option>
-        <option value="">访问时长</option>
-        <option value="">访问地区</option>
-        <option value="">访问系统与浏览器</option>
-        <option value="">访问日志</option>
-        <option value="">访问来源</option>
-        <option value="">错误页面</option>
+        <template v-for="item in apis">
+          <option value="{{item.api}}">{{item.name}}</option>
+        </template>
       </select>
       <br />
       <div class="row">
