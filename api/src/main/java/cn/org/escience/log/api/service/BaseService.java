@@ -1,8 +1,11 @@
 package cn.org.escience.log.api.service;
 
 import cn.org.escience.log.api.config.AppConstant.Mybatis;
+import cn.org.escience.log.api.config.ApplicationConfiguration;
 import cn.org.escience.log.ddsdb.model.DynamicDataSource;
+import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -43,6 +46,11 @@ public class BaseService {
     conf.setMapUnderscoreToCamelCase(Mybatis.mapUnderscoreToCamelCase);
     conf.setLazyLoadingEnabled(Mybatis.lazyLoadingEnable);
     conf.addMappers(Mybatis.mapperPackage);
+
+    PageInterceptor pageInterceptor = new PageInterceptor();
+    pageInterceptor.setProperties(ApplicationConfiguration.pagehelperProps);
+
+    conf.addInterceptor(pageInterceptor);
 
     SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(conf);
     sqlSession = ssf.openSession(true);

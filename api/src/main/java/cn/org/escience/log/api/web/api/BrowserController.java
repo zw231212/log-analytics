@@ -3,7 +3,7 @@ package cn.org.escience.log.api.web.api;
 import cn.org.escience.log.api.service.BrowserService;
 import cn.org.escience.log.api.utils.DateUtil;
 import cn.org.escience.log.api.web.entity.response.APIResponse;
-import cn.org.escience.log.api.web.entity.vo.BrowserVO;
+import cn.org.escience.log.api.web.entity.vo.BrowserVo;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -38,7 +38,7 @@ public class BrowserController{
 
 
     List<String> dates = DateUtil.getDates(begin, offset, type);
-    BrowserVO bvo = browserService.findAll(dates);
+    BrowserVo bvo = browserService.findAll(dates);
 
     return APIResponse.successInstance(bvo);
   }
