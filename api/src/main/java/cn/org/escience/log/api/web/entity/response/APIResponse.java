@@ -24,19 +24,19 @@ public class APIResponse implements Serializable{
     private Object body;
     private long costTimeMillis;
 
-    public APIResponse(int code,String msg,Object data){
+    private APIResponse(int code,String msg,Object data){
         this.meta = new Meta(code,msg);
         this.body = data;
     }
-    public APIResponse(Meta meta,Object data){
+    private APIResponse(Meta meta,Object data){
         this.meta = meta;
         this.body = data;
     }
 
-    public static APIResponse newInstance(int code,String msg,Object data){
+    private static APIResponse newInstance(int code,String msg,Object data){
         return new APIResponse(code,msg,data);
     }
-    public static APIResponse newInstance(Meta meta,Object data){
+    private static APIResponse newInstance(Meta meta,Object data){
         return new APIResponse(meta,data);
     }
 
