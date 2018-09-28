@@ -216,29 +216,39 @@ bg-white border-bottom shadow-sm">
           "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
           "type":"类型，每年每月或者每日，分别为year，month，day"
         },
-        "fields":{//返回参数字段
-           general:{  //摘要数据，每日数据没有
-             "yearmonth":"年份和月份",
-             "visits":"参观人次",
-             "visits_unique":"参观者",
-             "pages":"网页数",
-             "hits":"文件数",
-             "bandwidth":"字节数",
-             "pages_nv":"非浏览器网页数",
-             "hits_nv":"非浏览器文件数",
-             "bandwidth_nv":"非浏览器字节数",
-             "hosts_known":"已知的hosts数量",
-             "hosts_unknown":"无法解析的hosts数量",
-           },
-           list: {
-             "day":"时间或者月份",
-             "visits":"参观人次",
-             "pages":"网页数",
-             "hits":"文件数",
-             "bandwidth":"字节数",
-           }
+        "fields":{  //返回数据，摘要数据，每日数据没有
+          "yearmonth":"年份和月份",
+          "visits":"参观人次",
+          "visits_unique":"参观者",
+          "pages":"网页数",
+          "hits":"文件数",
+          "bandwidth":"字节数",
+          "pages_nv":"非浏览器网页数",
+          "hits_nv":"非浏览器文件数",
+          "bandwidth_nv":"非浏览器字节数",
+          "hosts_known":"已知的hosts数量",
+          "hosts_unknown":"无法解析的hosts数量",
         }
       },
+    {
+      "name":"获取每月或者每年或者每日的基本数据",
+      "api":version+"/general/daily/list",
+      "params":{//请求参数
+        "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,day，日期，不足2位的用0来补足，这里的参数是年份+月份+日期，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
+        "type":"类型，每年每月或者每日，分别为year，month，day",
+        "number":"分页页码",
+        "size":"分页大小"
+      },
+      "fields":{//返回参数字段
+        "day":"时间或者月份,或者年份",
+        "visits":"参观人次",
+        "pages":"网页数",
+        "hits":"文件数",
+        "bandwidth":"字节数",
+      }
+    },
     {
      "name":"参观者的区域信息",
       "api":version+"/area/list",
