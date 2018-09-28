@@ -1,9 +1,9 @@
 package cn.org.escience.log.api.web.api;
 
-import cn.org.escience.log.api.service.BrowserService;
+import cn.org.escience.log.api.service.OsService;
 import cn.org.escience.log.api.utils.DateUtil;
 import cn.org.escience.log.api.web.entity.response.APIResponse;
-import cn.org.escience.log.api.web.entity.vo.BrowserVo;
+import cn.org.escience.log.api.web.entity.vo.OsVo;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -17,10 +17,10 @@ import javax.ws.rs.core.MediaType;
 /**
  * 浏览器数据查看
  */
-@Path("/browser")
-public class BrowserController{
+@Path("/os")
+public class OsController {
 
-  private BrowserService browserService;
+  private OsService osService;
 
 
   @GET
@@ -34,13 +34,10 @@ public class BrowserController{
     if(StringUtil.isNullOrBlank(begin)){
       begin = DateUtil.getNow();
     }
-    //检查参数在filter里面做了
-
-
     List<String> dates = DateUtil.getDates(begin, offset, type);
-    BrowserVo bvo = browserService.findAll(dates);
+    OsVo osVo = osService.findAll(dates);
 
-    return APIResponse.successInstance(bvo);
+    return APIResponse.successInstance(osVo);
   }
 
   /**
@@ -51,7 +48,7 @@ public class BrowserController{
   @GET
   @Produces({MediaType.TEXT_PLAIN,MediaType.APPLICATION_JSON})
   public String getIt() {
-    return "{\"id\":\"browser\",\"msg\":\"查找browser相关的api！\"}";
+    return "{\"id\":\"os\",\"msg\":\"查找os相关的api！\"}";
   }
 
 }
