@@ -42,7 +42,9 @@ log-analytics
 
 
 #### 一些截图
-API样式交互查看图：
-[](./screenshots/api/查询api页面.png)
-[](./screenshots/api/api说明页面.png)
-[](./screenshots/api/api说明代码.png)
+
+[查询界面](./screenshots/api/查询api页面.png)
+
+[api说明展示](./screenshots/api/api说明页面.png)
+
+[api说明代码](./screenshots/api/api说明代码.png)
