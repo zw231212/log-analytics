@@ -119,25 +119,20 @@ public class ServiceFilter implements ContainerRequestFilter {
       try{
         offset = Integer.parseInt(offsetList.get(0));
       }catch (Exception e){
-        e.printStackTrace();
       }
       if(offset < 0){
         throw new AuthorizationException(Message.error("偏移量不能为负数！"));
       }
-      params.putSingle("offset",offset+"");
       List<String> typeList = params.get("type");
       String type = null;
       try{
         type = typeList.get(0);
       }catch (Exception e){
-        e.printStackTrace();
         type = "month";
       }
       if(!AppConstant.queryTypes.contains(type)){
         throw new AuthorizationException(Message.error("未知的查询类型 "+type+" ，查询类型是："+AppConstant.queryTypes));
       }
-      params.putSingle("type",type);
-
       //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
       String database = ids.get(0)+ Server.dbSuffix;
 
