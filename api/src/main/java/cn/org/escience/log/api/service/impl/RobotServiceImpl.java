@@ -35,6 +35,6 @@ public class RobotServiceImpl extends BaseService implements RobotService {
     List<Robot> robots = robotMapper.selectByExample(example);
     PageInfo<Robot> pageInfo = new PageInfo<>(robots);
 
-    return null;
+    return pageInfo;
   }
 }

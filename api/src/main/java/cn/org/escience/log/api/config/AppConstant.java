@@ -98,5 +98,6 @@ public class AppConstant {
    public static List<String> queryTypes = Arrays.asList("month", "day" , "year");
    public static List<Integer> errorCodes = Arrays.asList(400, 403 , 404);
    public static List<String> pagesActions = Arrays.asList("all", "entry" , "exit");
+   public static List<String> orders = Arrays.asList("hits DESC", "hits ASC" , "pages DESC", "pages ASC", "lastvisit DESC", "lastvisit ASC");
 
 }
