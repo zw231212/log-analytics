@@ -41,8 +41,6 @@ public class OsController {
   }
 
   /**
-   * 方法处理 HTTP GET 请求，默认的browser首页方法。返回的对象以"text/plain或者json"媒体类型
-   * 给客户端
    * @return String 以 text/plain或者json 形式响应
    */
   @GET

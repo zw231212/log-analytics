@@ -102,7 +102,8 @@ bg-white border-bottom shadow-sm">
       &radic;API说明
     </h5>
     <p>
-      请求数据说明：项目的根路径是在服务端设置的，本项目为api。请求的参数有id，year，month这三个，id是必须的。
+      请求数据说明：项目的根路径是在服务端设置的，本项目为api。请求的参数有id，begin，offset，type这四个，id是必须的。其中type也是每个都会有的，默认是month，
+      除了在摘要查询中需要指定外，其他的都不用，
       基本支持get和post请求，但是post的数据最终都会转为querystring。
       返回数据由code和body组成。
       <code lang="json">
@@ -330,7 +331,7 @@ bg-white border-bottom shadow-sm">
         "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小",
-        "type":"获取的类型，是获取全部url还是入站url，还是出站url，也就是分别是：all，enter，out"
+        "action":"获取的类型，是获取全部url还是入站url，还是出站url，也就是分别是：all，entry，exit"
       },
       "fields":{
         "yearmonth":"时间信息",
