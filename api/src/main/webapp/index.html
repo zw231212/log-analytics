@@ -50,7 +50,7 @@ bg-white border-bottom shadow-sm">
 
   <div class="row">
     <div class="col-md-9">
-      <input type="text" class="form-control" id="api-path" placeholder="api信息" value="" v-model="apiInfo" />
+      <input type="text" class="form-control" id="api-path" placeholder="api信息" value="" v-model="currentApiInfo" />
       <br />
       <textarea class="form-control" rows="10" id="response" v-model="responseInfo">响应全文</textarea>
     </div>
@@ -440,10 +440,12 @@ bg-white border-bottom shadow-sm">
       currentApi:apis[0],
       currentDb:dbs[0],
       type:"month",
-      responseInfo:""
+      responseInfo:"",
+      currentApiInfo:""
     },
     ready: function () {
       changeApiInfoArea(this.currentApi);
+      this.currentApiInfo = this.apiInfo;
     },
     computed:{
         apiInfo:function(){
@@ -473,7 +475,7 @@ bg-white border-bottom shadow-sm">
 
       },
       executeQuery:function(){
-         this.$http.get(this.apiInfo).then(function (resp) {
+         this.$http.get(this.currentApiInfo).then(function (resp) {
           console.log(resp)
         },function (err) {
           console.log(err)
