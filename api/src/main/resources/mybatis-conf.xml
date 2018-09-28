@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <!--这个文件只是当做测试来使用，最后使用还是自身的配置文件，且Configuration是java生成的-->
+    <!--这个文件只是当做测试来使用，最后使用还是自身的配置文件application.properties，且Configuration是java生成的-->
     <!-- 元素首次出现必须符合下面的顺序 -->
     <!-- (properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,
     objectWrapperFactory?,reflectorFactory?,plugins?,environments?,databaseIdProvider?,mappers?) -->
