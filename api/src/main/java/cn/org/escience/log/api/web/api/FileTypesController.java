@@ -2,10 +2,8 @@ package cn.org.escience.log.api.web.api;
 
 import cn.org.escience.log.api.model.Filetypes;
 import cn.org.escience.log.api.service.FileTypesService;
-import cn.org.escience.log.api.service.OsService;
 import cn.org.escience.log.api.utils.DateUtil;
 import cn.org.escience.log.api.web.entity.response.APIResponse;
-import cn.org.escience.log.api.web.entity.vo.OsVo;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.util.List;
 import javax.ws.rs.Consumes;

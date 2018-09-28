@@ -6,7 +6,6 @@ import cn.org.escience.log.api.service.ErrorService;
 import cn.org.escience.log.api.utils.DateUtil;
 import cn.org.escience.log.api.web.entity.response.APIResponse;
 import cn.org.escience.log.api.web.entity.response.Message;
-import cn.org.escience.log.api.web.entity.vo.BrowserVo;
 import cn.org.escience.log.api.web.entity.vo.ErrorDetailVo;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.util.List;
