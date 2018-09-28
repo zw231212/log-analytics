@@ -1,9 +1,11 @@
 package cn.org.escience.log.api.web.filter;
 
+import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.api.config.AppConstant.Server;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.ServiceManager;
 import cn.org.escience.log.api.utils.JSONUtil;
+import cn.org.escience.log.api.web.entity.response.APIResponse;
 import cn.org.escience.log.api.web.exception.AuthorizationException;
 import cn.org.escience.log.api.web.entity.response.Message;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
@@ -111,6 +113,31 @@ public class ServiceFilter implements ContainerRequestFilter {
       if(ids == null || ids.size() == 0 || "".equals(ids.get(0).trim()) ){
         throw new AuthorizationException("请指定查询参数key id 的值！");
       }
+      //检查偏移量和查询类型参数 偏移量默认为0，查询类型参数默认为month
+      List<String> offsetList = params.get("offset");
+      int offset = 0;
+      try{
+        offset = Integer.parseInt(offsetList.get(0));
+      }catch (Exception e){
+        e.printStackTrace();
+      }
+      if(offset < 0){
+        throw new AuthorizationException(Message.error("偏移量不能为负数！"));
+      }
+      params.putSingle("offset",offset+"");
+      List<String> typeList = params.get("type");
+      String type = null;
+      try{
+        type = typeList.get(0);
+      }catch (Exception e){
+        e.printStackTrace();
+        type = "month";
+      }
+      if(!AppConstant.queryTypes.contains(type)){
+        throw new AuthorizationException(Message.error("未知的查询类型 "+type+" ，查询类型是："+AppConstant.queryTypes));
+      }
+      params.putSingle("type",type);
+
       //最终的数据库的后缀名成是要和aw2sql那边一致的 ，前端传递过来的参数只有id（也就是自己的标识符
       String database = ids.get(0)+ Server.dbSuffix;
 
