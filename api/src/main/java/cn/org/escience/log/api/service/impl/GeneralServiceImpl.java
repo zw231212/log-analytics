@@ -27,11 +27,10 @@ public class GeneralServiceImpl extends BaseService implements GeneralService {
         example.createCriteria().andYearMonthIn(dates);
         break;
       case "year":
-        Criteria criteria = example.createCriteria();
+        Criteria criteria = example.or();
         for (String date : dates) {
-           criteria.andYearMonthLike(date);
+           criteria.andYearMonthLike(date+"%");
         }
-        example.or(criteria);
         break;
     }
     List<General> generals = generalMapper.selectByExample(example);

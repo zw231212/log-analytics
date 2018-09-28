@@ -37,18 +37,16 @@ public class DailyServiceImpl extends BaseService implements DailyService {
         example.createCriteria().andDayIn(dates);
         break;
       case "month":
-        Criteria criteria = example.createCriteria();
+        Criteria criteria = example.or();
         for (String date : dates) {
-          criteria.andDayLike(date);
+          criteria.andDayLike(date+"%");
         }
-        example.or(criteria);
         break;
       case "year":
-        criteria = example.createCriteria();
+        criteria = example.or();
         for (String date : dates) {
-          criteria.andDayLike(date);
+          criteria.andDayLike(date+"%");
         }
-        example.or(criteria);
         break;
     }
 
