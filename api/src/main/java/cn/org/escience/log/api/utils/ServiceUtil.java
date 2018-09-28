@@ -6,6 +6,11 @@ import java.util.List;
 
 public class ServiceUtil {
 
+  /**
+   * 检查输入的日期
+   * @param dates
+   * @return
+   */
   public static List<String> checkDates(List<String> dates){
     if(dates == null){
       dates = new ArrayList<>();

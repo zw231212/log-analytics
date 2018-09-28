@@ -96,5 +96,6 @@ public class AppConstant {
    }
 
    public static List<String> queryTypes = Arrays.asList("month", "day" , "year");
+   public static List<Integer> errorCodes = Arrays.asList(400, 403 , 404);
 
 }
