@@ -10,7 +10,7 @@
     [v-cloak]{
       display: none;
     }
-    pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+    pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; height: 500px;}
     .string { color: green; }
     .number { color: darkorange; }
     .boolean { color: blue; }
@@ -52,7 +52,7 @@ bg-white border-bottom shadow-sm">
     <div class="col-md-9">
       <input type="text" class="form-control" id="api-path" placeholder="api信息" value="" v-model="currentApiInfo" />
       <br />
-      <textarea class="form-control" rows="10" id="response" v-model="responseInfo">响应全文</textarea>
+      <pre id="response">响应全文</pre>
     </div>
     <div class="col-md-3">
       <select id="database" class="form-control">
@@ -476,13 +476,18 @@ bg-white border-bottom shadow-sm">
       },
       executeQuery:function(){
          this.$http.get(this.currentApiInfo).then(function (resp) {
-          console.log(resp)
+           changeResponseInfoArea(resp.data);
+           changeApiInfoArea(this.currentApi)
         },function (err) {
           console.log(err)
         })
       }
     }
   });
+
+  function changeResponseInfoArea(json){
+    $('#response').html(syntaxHighlight(json));
+  }
 
   function changeApiInfoArea(json){
     $('#api-info-area').html(syntaxHighlight(json));
