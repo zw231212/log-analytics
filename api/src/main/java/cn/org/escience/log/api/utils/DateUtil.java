@@ -32,7 +32,6 @@ public class DateUtil {
       type = "month";
     }
     Date dateBegin = getDateByType(begin, type);
-    System.out.println(dateBegin);
     List<String> results = new ArrayList<>();
     switch (type){
       case "year":
