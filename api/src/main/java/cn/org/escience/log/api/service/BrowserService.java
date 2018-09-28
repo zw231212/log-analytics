@@ -1,10 +1,10 @@
 package cn.org.escience.log.api.service;
 
-import cn.org.escience.log.api.model.Browser;
+import cn.org.escience.log.api.web.entity.vo.BrowserVO;
 import java.util.List;
 
 public interface BrowserService {
 
-  List<Browser> findAll();
+  BrowserVO findAll(List<String> dates);
 
 }

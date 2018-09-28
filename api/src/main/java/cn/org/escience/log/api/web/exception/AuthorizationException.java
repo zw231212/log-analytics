@@ -1,5 +1,7 @@
 package cn.org.escience.log.api.web.exception;
 
+import cn.org.escience.log.api.web.entity.response.Message;
+import cn.org.escience.log.api.web.entity.response.Meta;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

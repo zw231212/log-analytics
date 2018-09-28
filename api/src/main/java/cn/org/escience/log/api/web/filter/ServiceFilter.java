@@ -1,12 +1,11 @@
 package cn.org.escience.log.api.web.filter;
 
-import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.api.config.AppConstant.Server;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.ServiceManager;
 import cn.org.escience.log.api.utils.JSONUtil;
 import cn.org.escience.log.api.web.exception.AuthorizationException;
-import cn.org.escience.log.api.web.exception.Message;
+import cn.org.escience.log.api.web.entity.response.Message;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.io.BufferedReader;
 import java.io.IOException;

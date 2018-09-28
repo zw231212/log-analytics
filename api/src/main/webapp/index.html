@@ -107,7 +107,7 @@ bg-white border-bottom shadow-sm">
       返回数据由code和body组成。
       <code lang="json">
         {
-        code:int,
+        meta:{code:int，msg:string},
         body:object
         }
       </code>
@@ -211,9 +211,8 @@ bg-white border-bottom shadow-sm">
         "api":version+"/general/list",
         "params":{//请求参数
           "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-          "year":"年份，XXXX四位数字来表示",
-          "month":"月份，不足的用0来补足",
-          "day":"日期，不足2位的用0来补足",
+          "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,day，日期，不足2位的用0来补足，这里的参数是年份+月份+日期，字符串，中间使用横杆“-”来分割",
+          "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
           "type":"类型，每年每月或者每日，分别为year，month，day"
         },
         "fields":{//返回参数字段
@@ -246,8 +245,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/area/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小"
       },
@@ -263,8 +262,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/host/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小"
       },
@@ -281,8 +280,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/robots/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小"
       },
@@ -298,8 +297,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/session/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
       },
       "fields":{
         "yearmonth":"时间信息",
@@ -312,8 +311,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/filetypes/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
       },
       "fields":{
         "yearmonth":"时间信息",
@@ -327,8 +326,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/pages/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小",
         "type":"获取的类型，是获取全部url还是入站url，还是出站url，也就是分别是：all，enter，out"
@@ -347,8 +346,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/os/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
       },
       "fields":{
         known:{
@@ -369,8 +368,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/browser/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始"
       },
       "fields":{
         known:{
@@ -391,8 +390,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/error/list",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
       },
       "fields":{
         known:{
@@ -408,8 +407,8 @@ bg-white border-bottom shadow-sm">
       "api":version+"/error/detail",
       "params":{
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
-        "year":"年份，XXXX四位数字来表示",
-        "month":"月份，不足的用0来补足",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
         "number":"分页页码",
         "size":"分页大小",
         "code":"错误码，有404，403还有400的数据"

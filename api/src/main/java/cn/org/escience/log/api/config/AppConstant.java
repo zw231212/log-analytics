@@ -1,9 +1,14 @@
 package cn.org.escience.log.api.config;
 
 import cn.org.escience.log.ddsdb.utils.StringUtil;
+import java.util.Arrays;
+import java.util.List;
 
 public class AppConstant {
 
+  /**
+   * 配置文件里的参数
+   */
   public static final String  MODULE_NAME_KEY =  "module.name";
   public static final String  MODULE_RESOURCE_KEY =  "module.resources";
   public static final String  SERVER_URI_KEY =  "server.uri";
@@ -79,7 +84,10 @@ public class AppConstant {
      }
    }
 
-   public static class Cros{
+  /**
+   * 跨域相关的配置
+   */
+  public static class Cros{
      public static String maxAge  = ApplicationConfiguration.get(CROS_MAXAGE_KEY);
      public static String allowMethods  = ApplicationConfiguration.get(CROS_ALLOW_METHODS_KEY);
      public static String allowOrigin  = ApplicationConfiguration.get(CROS_ALLOW_ORIGIN_KEY);
@@ -87,5 +95,6 @@ public class AppConstant {
      public static String allowCredentials  = ApplicationConfiguration.get(CROS_ALLOW_CREDENTIALS_KEY);
    }
 
+   public static List<String> queryTypes = Arrays.asList("month", "day" , "year");
 
 }

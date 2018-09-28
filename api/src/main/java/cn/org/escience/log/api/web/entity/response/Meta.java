@@ -1,4 +1,4 @@
-package cn.org.escience.log.api.web.exception;
+package cn.org.escience.log.api.web.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
