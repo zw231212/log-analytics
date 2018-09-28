@@ -21,7 +21,10 @@ log-analytics-api
 （2）ddsdb：这个模块是根据提供的database name 来生成DataSource，并且在这里管理datasource数据源和数据连接；项目就依赖于mysql驱动库；
 
 （3）api：是对外服务的项目代码。项目依赖于mybatis（数据库查询方便），jetty：服务提供者，jersey：rest API提供者，这里service是被管理起来的。
-
+其中主要是service包下面的BaseService和ServiceManager。还有便是web包下面的过滤器。其中主要在ServiceFilter里面完成校验；
+校验主要是对查询请求id校验，同时将post的参数转换成get的querystring。
+还有就是对每个controller（MatchedResource）里面的service进行生成。
+每个service必须继承BaseService，然后通过sqlSession获取Mapper信息。
 
 
 
