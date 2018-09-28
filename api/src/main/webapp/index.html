@@ -55,23 +55,23 @@ bg-white border-bottom shadow-sm">
       <pre id="response">响应全文</pre>
     </div>
     <div class="col-md-3">
-      <select id="database" class="form-control">
+      <select id="database" class="form-control" @change="changeDb()">
         <option value="-1">请选择日志所属网站</option>
         <template v-for="item in dbs">
           <option value="{{item.id}}">{{item.name}}</option>
         </template>
       </select>
       <br />
-      <select id="rest-api-select" class="form-control">
+      <select id="rest-api-select" class="form-control" @change="changeApi()">
         <option value="-1">请选择查看的数据</option>
-        <template v-for="item in apis">
-          <option value="{{item.api}}">{{item.name}}</option>
+        <template v-for="(index,item) in apis">
+          <option value="{{index}}">{{item.name}}</option>
         </template>
       </select>
       <br />
       <div class="row">
         <div class="col-md-6 mb-3">
-          <select id="month" class="form-control" v-cloak>
+          <select id="month" class="form-control" @change="changeMonth()">
             <option value="-1">选择月份</option>
             <template v-for="item in months">
               <option value="{{item}}">
@@ -81,7 +81,7 @@ bg-white border-bottom shadow-sm">
           </select>
         </div>
         <div class="col-md-6 mb-3">
-          <select id="year" class="form-control">
+          <select id="year" class="form-control" @change="changeYear()">
             <option value="-1">选择年份</option>
             <template v-for="item in years">
               <option value="{{item}}">{{item}}</option>
@@ -209,13 +209,13 @@ bg-white border-bottom shadow-sm">
   var version = "v1";
   var apis = [
       {
-        "name":"获取每月或者每年或者每日的基本数据",
+        "name":"获取每月或者每年摘要数据",
         "api":version+"/general/list",
         "params":{//请求参数
           "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
           "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,day，日期，不足2位的用0来补足，这里的参数是年份+月份+日期，字符串，中间使用横杆“-”来分割",
           "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
-          "type":"类型，每年每月或者每日，分别为year，month，day"
+          "type":"类型，每年每月或者每日，分别为year，month"
         },
         "fields":{  //返回数据，摘要数据，每日数据没有
           "yearmonth":"年份和月份",
@@ -232,7 +232,7 @@ bg-white border-bottom shadow-sm">
         }
       },
     {
-      "name":"获取每月或者每年或者每日的基本数据",
+      "name":"获取每月或每年或每日的基本数据",
       "api":version+"/general/daily/list",
       "params":{//请求参数
         "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
@@ -438,7 +438,7 @@ bg-white border-bottom shadow-sm">
       year:2017,
       month:5,
       currentApi:apis[0],
-      currentDb:dbs[0],
+      currentDbId:dbs[0].id,
       type:"month",
       responseInfo:"",
       currentApiInfo:""
@@ -450,7 +450,7 @@ bg-white border-bottom shadow-sm">
     computed:{
         apiInfo:function(){
            var baseApi = this.currentApi.api;
-           var begin = this.year +"-" + this.month,type = this.type,id=this.currentDb.id;
+           var begin = this.year +"-" + this.month,type = this.type,id=this.currentDbId;
            var params = {
              id:id,
              begin:begin,
@@ -463,16 +463,36 @@ bg-white border-bottom shadow-sm">
     },
     methods:{
        changeDb:function(){
-
+         let value = $("#database option:selected").val();
+         if(value == -1){
+           return;
+         }
+         this.currentDbId = value;
+         this.currentApiInfo = this.apiInfo;
        },
       changeApi:function(){
-         
+        let value = $("#rest-api-select option:selected").val();
+        if(value == -1){
+          return;
+        }
+        this.currentApi = this.apis[value];
+        this.currentApiInfo = this.apiInfo;
       },
       changeMonth:function(){
-
+        let value = $("#month option:selected").val();
+        if(value == -1){
+          return;
+        }
+        this.month = value;
+        this.currentApiInfo = this.apiInfo;
       },
       changeYear:function(){
-
+        let value = $("#year option:selected").val();
+        if(value == -1){
+          return;
+        }
+        this.year = value;
+        this.currentApiInfo = this.apiInfo;
       },
       executeQuery:function(){
          this.$http.get(this.currentApiInfo).then(function (resp) {
