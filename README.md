@@ -1,38 +1,39 @@
-### 项目说明
-  日志的解析结果api。
+----------------
+log-analytics-api
+-----------------
+
+#### 项目来源：
  ```
- 日志是通过awstats来进行解析的；
- 而awstats的解析结果是由aw2sql来进行入库的，只是每次都是不同的数据库，而不是统一的数据库。
- 最后dsdb模块要实现的就是每次传入的都是不同的数据库的名称，甚至有可能是不同的host，
- 根据传递的参数的不同来加载获取数据库的连接。
- 然后在api模块里面实现调用。加载获取不同数据库的数据。
+ awstats解析的日志是txt文档，然后结合apache,nginx等来完成网页上的展示。这里对其他项目不能很好的完成调用。
+ 而且由于对于awstats不熟悉（开发语言perl），于是寻找了一些工具来进行入库或者直接以api形式服务。最终到了
+ 一个项目用于将awstats解析结果的数据入库到mysql，尝试了一些。有一些问题，但是基本能用，入库到mysql之后，
+ 对于单个网站来说很容易集成到系统中，但是对于多个网站来说，每次都是生成新的数据库。因此对于数据的统一调用
+ 就不是很方便。所以便打算写一个项目来完成这样的一个人物。
+ 整个的日志数据服务的流程是：
+ 日志是通过awstats来进行解析的，解析结果上传至平台，然后有平台对解析结果进行维护。而awstats的解析结果是
+ 由aw2sql来进行入库的，入库之后的数据可能有很多个数据库。因此再运行此项目来进行服务。
 
 ```
-### 数据模型说明
-  
-### 一些说明
-  
-##### 任务说明：
 
-    
-#### 框架任务：
-    
+#### 项目模块说明
+（1）generator是用来生成mybatis通用代码的；
 
-#### 代码提交说明
-    
+（2）ddsdb：这个模块是根据提供的database name 来生成DataSource，并且在这里管理datasource数据源和数据连接；项目就依赖于mysql驱动库；
 
-#### 处理springboot中使用thymleaf需要重启的问题：
-    1. 增加develtools依赖；
-    2. 然后在进入settings->complier->make project automatically,打勾；
-    3. 然后 Shift+Ctrl+Alt+/，选择Registry
-    4. 找到complier.automake.allow.when.app.running 这样完成了不用不断重启的配置；
+（3）api：是对外服务的项目代码。项目依赖于mybatis（数据库查询方便），jetty：服务提供者，jersey：rest API提供者，这里service是被管理起来的。
 
-#### 更新说明：
 
-#### API changes ：
 
-#### added ：
 
-#### bug fixed :
+#### 项目运行
+（1）运行代码里面的LogAPIApplication main方法即可；
 
-#### optimised :
+（2）或者加载到tomcat里面去运行；
+
+（3）注意：main方法运行的时候把web.xml里面的default servlet和mapping打开，这样能编辑HTML；在tomcat里面运行的时候需要关闭，否则会报错；
+
+（4）代码运行：可以打war包运行，对于jar包运行还不行（在main里面启动的是jetty的webcontext）；
+
+
+
+
