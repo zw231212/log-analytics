@@ -50,8 +50,9 @@ bg-white border-bottom shadow-sm">
 
   <div class="row">
     <div class="col-md-9">
-      <input type="text" class="form-control" id="api-path" placeholder="api信息" value="" /><br />
-      <textarea class="form-control" rows="10" id="response" >响应全文</textarea>
+      <input type="text" class="form-control" id="api-path" placeholder="api信息" value="" v-model="apiInfo" />
+      <br />
+      <textarea class="form-control" rows="10" id="response" v-model="responseInfo">响应全文</textarea>
     </div>
     <div class="col-md-3">
       <select id="database" class="form-control">
@@ -88,7 +89,7 @@ bg-white border-bottom shadow-sm">
           </select>
         </div>
       </div>
-      <button style="margin-bottom: 17px;" class="btn btn-outline-primary">查询</button>
+      <button style="margin-bottom: 17px;" class="btn btn-outline-primary" @click="executeQuery()">查询</button>
     </div>
   </div>
    <br />
@@ -369,7 +370,6 @@ bg-white border-bottom shadow-sm">
            "agent":"用户代理数据",
            "lastvisit":"最后参观日期"
         }
-
       }
     },
     {
@@ -434,36 +434,56 @@ bg-white border-bottom shadow-sm">
       months:Array(12).fill('naive').map((v, i) =>{ return i+1}),
       years:Array(12).fill('naive').map((v, i) =>{ return 2007+i}),
       dbs:dbs,
-      apis:apis
+      apis:apis,
+      year:2017,
+      month:5,
+      currentApi:apis[0],
+      currentDb:dbs[0],
+      type:"month",
+      responseInfo:""
     },
     ready: function () {
+      changeApiInfoArea(this.currentApi);
     },
     computed:{
-
+        apiInfo:function(){
+           var baseApi = this.currentApi.api;
+           var begin = this.year +"-" + this.month,type = this.type,id=this.currentDb.id;
+           var params = {
+             id:id,
+             begin:begin,
+             offset:0,
+             type:  type
+           };
+           let querystring = json2Querystring(params);
+           return baseApi+"?"+querystring;
+        }
     },
     methods:{
+       changeDb:function(){
 
+       },
+      changeApi:function(){
+         
+      },
+      changeMonth:function(){
+
+      },
+      changeYear:function(){
+
+      },
+      executeQuery:function(){
+         this.$http.get(this.apiInfo).then(function (resp) {
+          console.log(resp)
+        },function (err) {
+          console.log(err)
+        })
+      }
     }
   });
 
-  $(function () {
-
-  });
-  console.log(dbs)
-  $('#api-info-area').html(syntaxHighlight(apis[0]));
-  function getBrowserInfo(id){
-    $.ajax({
-      url:"v1/browser/list?id="+id,
-      method:"GET",
-      type:"json",
-      data:{
-        "begin":"2018-01-01",
-        "end":"2018-09-02"
-      },
-      success:function(data){
-        console.log(data)
-      }
-    });
+  function changeApiInfoArea(json){
+    $('#api-info-area').html(syntaxHighlight(json));
   }
 
   //将json数据转换为querystring
