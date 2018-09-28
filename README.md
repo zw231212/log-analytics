@@ -1,9 +1,8 @@
 ----------------
-log-analytics-api
+log-analytics
 -----------------
 
 #### 项目来源：
- ```
  awstats解析的日志是txt文档，然后结合apache,nginx等来完成网页上的展示。这里对其他项目不能很好的完成调用。
  而且由于对于awstats不熟悉（开发语言perl），于是寻找了一些工具来进行入库或者直接以api形式服务。最终到了
  一个项目用于将awstats解析结果的数据入库到mysql，尝试了一些。有一些问题，但是基本能用，入库到mysql之后，
@@ -13,7 +12,6 @@ log-analytics-api
  日志是通过awstats来进行解析的，解析结果上传至平台，然后有平台对解析结果进行维护。而awstats的解析结果是
  由aw2sql来进行入库的，入库之后的数据可能有很多个数据库。因此再运行此项目来进行服务。
 
-```
 
 #### 项目模块说明
 （1）generator是用来生成mybatis通用代码的；
@@ -29,14 +27,22 @@ log-analytics-api
 
 
 #### 项目运行
-（1）运行代码里面的LogAPIApplication main方法即可；
+（1）运行api模块代码里面的LogAPIApplication main方法即可；
 
-（2）或者加载到tomcat里面去运行；
+（2）或者间api的war包加载到tomcat里面去运行；
 
 （3）注意：main方法运行的时候把web.xml里面的default servlet和mapping打开，这样能编辑HTML；在tomcat里面运行的时候需要关闭，否则会报错；
 
 （4）代码运行：可以打war包运行，对于jar包运行还不行（在main里面启动的是jetty的webcontext）；
 
+（5）代码运行起来后可以查看api信息。（页面写在api模块下的webapp里面）
+
+#### 相关项目
+[aw2sql](https://github.com/zw231212/aw2sql)
 
 
-
+#### 一些截图
+API样式交互查看图：
+[](./screenshots/api/查询api页面.png)
+[](./screenshots/api/api说明页面.png)
+[](./screenshots/api/api说明代码.png)
