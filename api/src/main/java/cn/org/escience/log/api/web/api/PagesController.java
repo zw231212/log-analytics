@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * 浏览器数据查看
  */
-@Path("/browser")
+@Path("/pages")
 public class PagesController {
 
   private PagesService pagesService;

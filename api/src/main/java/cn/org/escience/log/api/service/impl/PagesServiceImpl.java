@@ -29,7 +29,6 @@ public class PagesServiceImpl extends BaseService implements PagesService {
 
     PagesExample pagesExample = new PagesExample();
     Criteria criteria = pagesExample.createCriteria();
-
     switch (action){
       case "entry":
         //只查入站，也就是entry的值不能为0
