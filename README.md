@@ -42,9 +42,11 @@ log-analytics
 
 
 #### 一些截图
+ 查询界面
+[](./screenshots/api/查询api页面.png)
 
-[查询界面](./screenshots/api/查询api页面.png)
+api说明展示
+[](./screenshots/api/api说明页面.png)
 
-[api说明展示](./screenshots/api/api说明页面.png)
-
-[api说明代码](./screenshots/api/api说明代码.png)
+api说明代码
+[](./screenshots/api/api说明代码.png)
