@@ -6,9 +6,8 @@ import cn.org.escience.log.api.model.Browser;
 import cn.org.escience.log.api.model.BrowserExample;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.BrowserService;
+import cn.org.escience.log.api.utils.ServiceUtil;
 import cn.org.escience.log.api.web.entity.vo.BrowserVo;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class BrowserServiceImpl extends BaseService implements BrowserService {
@@ -22,15 +21,7 @@ public class BrowserServiceImpl extends BaseService implements BrowserService {
 
   @Override
   public BrowserVo findAll(List<String> dates) {
-    if(dates == null){
-      dates = new ArrayList<>();
-    }
-    if(dates.size() == 0){
-      Calendar calendar = Calendar.getInstance();
-      int year = calendar.get(Calendar.YEAR);
-      int month = calendar.get(Calendar.MONTH);
-      dates.add(year+""+month);
-    }
+    dates = ServiceUtil.checkDates(dates);
     BrowserExample browserExample = new BrowserExample();
 //    Criteria criteria = browserExample.createCriteria();
 //    for (String date : dates) {
