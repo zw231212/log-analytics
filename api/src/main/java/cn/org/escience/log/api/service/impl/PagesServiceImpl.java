@@ -6,6 +6,7 @@ import cn.org.escience.log.api.model.PagesExample;
 import cn.org.escience.log.api.model.PagesExample.Criteria;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.PagesService;
+import cn.org.escience.log.api.utils.ServiceUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
@@ -20,6 +21,7 @@ public class PagesServiceImpl extends BaseService implements PagesService {
 
   @Override
   public PageInfo<Pages> findAll(List<String> dates, int number, int size, String action) {
+    dates = ServiceUtil.checkDates(dates);
     if(number < 0){
       number = 0;
     }
@@ -29,6 +31,7 @@ public class PagesServiceImpl extends BaseService implements PagesService {
 
     PagesExample pagesExample = new PagesExample();
     Criteria criteria = pagesExample.createCriteria();
+    criteria.andYearMonthIn(dates);
     switch (action){
       case "entry":
         //只查入站，也就是entry的值不能为0

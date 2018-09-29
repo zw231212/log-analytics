@@ -2,16 +2,11 @@
 *
 * Hours.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
-public class Hours {
-    /**
-     * 
-     */
-    private Byte hour;
-
+public class Hours extends HoursKey {
     /**
      * 
      */
@@ -26,22 +21,6 @@ public class Hours {
      * 
      */
     private Long bandwidth;
-
-    /**
-     * 
-     * @return hour 
-     */
-    public Byte getHour() {
-        return hour;
-    }
-
-    /**
-     * 
-     * @param hour 
-     */
-    public void setHour(Byte hour) {
-        this.hour = hour;
-    }
 
     /**
      * 

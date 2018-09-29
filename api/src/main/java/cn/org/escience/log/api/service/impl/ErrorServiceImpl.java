@@ -34,6 +34,7 @@ public class ErrorServiceImpl extends BaseService implements ErrorService {
 
   @Override
   public ErrorDetailVo findDetailErrorPage(List<String> dates, int number, int size, int code) {
+    dates = ServiceUtil.checkDates(dates);
 
     if(number < 0){
       number = 0;
@@ -47,6 +48,7 @@ public class ErrorServiceImpl extends BaseService implements ErrorService {
     switch (code){
       case 404:
         Errors404Example errors404Example = new Errors404Example();
+        errors404Example.createCriteria().andYearMonthIn(dates);
         errors404Example.setOrderByClause("hits DESC");
         List<Errors404> errors404s = errors404Mapper.selectByExample(errors404Example);
         PageInfo<Errors404> pageInfo = new PageInfo<>(errors404s);

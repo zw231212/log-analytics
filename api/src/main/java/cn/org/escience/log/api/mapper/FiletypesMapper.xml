@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.org.escience.log.api.mapper.FiletypesMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Filetypes">
+    <id column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <id column="type" jdbcType="VARCHAR" property="type" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
     <result column="bandwidth" jdbcType="BIGINT" property="bandwidth" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    `type`, hits, bandwidth, bwwithoutcompress, bwaftercompress
+    `year_month`, `type`, hits, bandwidth, bwwithoutcompress, bwaftercompress
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.FiletypesExample" resultMap="BaseResultMap">
     select
@@ -83,15 +84,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.org.escience.log.api.model.FiletypesKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from filetypes
-    where `type` = #{type,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `type` = #{type,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="cn.org.escience.log.api.model.FiletypesKey">
     delete from filetypes
-    where `type` = #{type,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `type` = #{type,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.org.escience.log.api.model.FiletypesExample">
     delete from filetypes
@@ -100,14 +103,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Filetypes">
-    insert into filetypes (`type`, hits, bandwidth, 
-      bwwithoutcompress, bwaftercompress)
-    values (#{type,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}, 
-      #{bwwithoutcompress,jdbcType=BIGINT}, #{bwaftercompress,jdbcType=BIGINT})
+    insert into filetypes (`year_month`, `type`, hits, 
+      bandwidth, bwwithoutcompress, bwaftercompress
+      )
+    values (#{yearMonth,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, 
+      #{bandwidth,jdbcType=BIGINT}, #{bwwithoutcompress,jdbcType=BIGINT}, #{bwaftercompress,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Filetypes">
     insert into filetypes
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        `year_month`,
+      </if>
       <if test="type != null">
         `type`,
       </if>
@@ -125,6 +133,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
       </if>
@@ -151,6 +162,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update filetypes
     <set>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.type != null">
         `type` = #{record.type,jdbcType=VARCHAR},
       </if>
@@ -173,7 +187,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update filetypes
-    set `type` = #{record.type,jdbcType=VARCHAR},
+    set `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
       hits = #{record.hits,jdbcType=INTEGER},
       bandwidth = #{record.bandwidth,jdbcType=BIGINT},
       bwwithoutcompress = #{record.bwwithoutcompress,jdbcType=BIGINT},
@@ -198,7 +213,8 @@
         bwaftercompress = #{bwaftercompress,jdbcType=BIGINT},
       </if>
     </set>
-    where `type` = #{type,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `type` = #{type,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Filetypes">
     update filetypes
@@ -206,6 +222,7 @@
       bandwidth = #{bandwidth,jdbcType=BIGINT},
       bwwithoutcompress = #{bwwithoutcompress,jdbcType=BIGINT},
       bwaftercompress = #{bwaftercompress,jdbcType=BIGINT}
-    where `type` = #{type,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `type` = #{type,jdbcType=VARCHAR}
   </update>
 </mapper>

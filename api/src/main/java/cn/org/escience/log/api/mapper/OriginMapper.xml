@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.org.escience.log.api.mapper.OriginMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Origin">
+    <id column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <id column="from" jdbcType="VARCHAR" property="from" />
     <result column="pages" jdbcType="INTEGER" property="pages" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    `from`, pages, hits
+    `year_month`, `from`, pages, hits
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.OriginExample" resultMap="BaseResultMap">
     select
@@ -81,15 +82,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.org.escience.log.api.model.OriginKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from origin
-    where `from` = #{from,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `from` = #{from,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="cn.org.escience.log.api.model.OriginKey">
     delete from origin
-    where `from` = #{from,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `from` = #{from,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.org.escience.log.api.model.OriginExample">
     delete from origin
@@ -98,14 +101,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Origin">
-    insert into origin (`from`, pages, hits
-      )
-    values (#{from,jdbcType=VARCHAR}, #{pages,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}
-      )
+    insert into origin (`year_month`, `from`, pages, 
+      hits)
+    values (#{yearMonth,jdbcType=VARCHAR}, #{from,jdbcType=VARCHAR}, #{pages,jdbcType=INTEGER}, 
+      #{hits,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Origin">
     insert into origin
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        `year_month`,
+      </if>
       <if test="from != null">
         `from`,
       </if>
@@ -117,6 +123,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="from != null">
         #{from,jdbcType=VARCHAR},
       </if>
@@ -137,6 +146,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update origin
     <set>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.from != null">
         `from` = #{record.from,jdbcType=VARCHAR},
       </if>
@@ -153,7 +165,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update origin
-    set `from` = #{record.from,jdbcType=VARCHAR},
+    set `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      `from` = #{record.from,jdbcType=VARCHAR},
       pages = #{record.pages,jdbcType=INTEGER},
       hits = #{record.hits,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -170,12 +183,14 @@
         hits = #{hits,jdbcType=INTEGER},
       </if>
     </set>
-    where `from` = #{from,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `from` = #{from,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Origin">
     update origin
     set pages = #{pages,jdbcType=INTEGER},
       hits = #{hits,jdbcType=INTEGER}
-    where `from` = #{from,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `from` = #{from,jdbcType=VARCHAR}
   </update>
 </mapper>

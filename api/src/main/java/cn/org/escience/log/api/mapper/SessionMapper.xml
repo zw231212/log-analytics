@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.org.escience.log.api.mapper.SessionMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Session">
+    <id column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <id column="range" jdbcType="VARCHAR" property="range" />
     <result column="visits" jdbcType="INTEGER" property="visits" />
   </resultMap>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    `range`, visits
+    `year_month`, `range`, visits
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.SessionExample" resultMap="BaseResultMap">
     select
@@ -80,15 +81,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.org.escience.log.api.model.SessionKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from session
-    where `range` = #{range,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `range` = #{range,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="cn.org.escience.log.api.model.SessionKey">
     delete from session
-    where `range` = #{range,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `range` = #{range,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.org.escience.log.api.model.SessionExample">
     delete from session
@@ -97,12 +100,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Session">
-    insert into session (`range`, visits)
-    values (#{range,jdbcType=VARCHAR}, #{visits,jdbcType=INTEGER})
+    insert into session (`year_month`, `range`, visits
+      )
+    values (#{yearMonth,jdbcType=VARCHAR}, #{range,jdbcType=VARCHAR}, #{visits,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Session">
     insert into session
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        `year_month`,
+      </if>
       <if test="range != null">
         `range`,
       </if>
@@ -111,6 +119,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="range != null">
         #{range,jdbcType=VARCHAR},
       </if>
@@ -128,6 +139,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update session
     <set>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.range != null">
         `range` = #{record.range,jdbcType=VARCHAR},
       </if>
@@ -141,7 +155,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update session
-    set `range` = #{record.range,jdbcType=VARCHAR},
+    set `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      `range` = #{record.range,jdbcType=VARCHAR},
       visits = #{record.visits,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -154,11 +169,13 @@
         visits = #{visits,jdbcType=INTEGER},
       </if>
     </set>
-    where `range` = #{range,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `range` = #{range,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Session">
     update session
     set visits = #{visits,jdbcType=INTEGER}
-    where `range` = #{range,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `range` = #{range,jdbcType=VARCHAR}
   </update>
 </mapper>

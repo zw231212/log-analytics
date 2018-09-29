@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.WormsMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Worms">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="text" jdbcType="VARCHAR" property="text" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
     <result column="bandwidth" jdbcType="BIGINT" property="bandwidth" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `text`, hits, bandwidth, lastvisit
+    id, `year_month`, `text`, hits, bandwidth, lastvisit
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.WormsExample" resultMap="BaseResultMap">
     select
@@ -100,16 +101,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Worms">
-    insert into worms (id, `text`, hits, 
-      bandwidth, lastvisit)
-    values (#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, 
-      #{bandwidth,jdbcType=BIGINT}, #{lastvisit,jdbcType=VARCHAR})
+    insert into worms (id, `year_month`, `text`, 
+      hits, bandwidth, lastvisit
+      )
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}, #{lastvisit,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Worms">
     insert into worms
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="text != null">
         `text`,
@@ -127,6 +133,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="text != null">
         #{text,jdbcType=VARCHAR},
@@ -154,6 +163,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.text != null">
         `text` = #{record.text,jdbcType=VARCHAR},
       </if>
@@ -174,6 +186,7 @@
   <update id="updateByExample" parameterType="map">
     update worms
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       `text` = #{record.text,jdbcType=VARCHAR},
       hits = #{record.hits,jdbcType=INTEGER},
       bandwidth = #{record.bandwidth,jdbcType=BIGINT},
@@ -185,6 +198,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Worms">
     update worms
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="text != null">
         `text` = #{text,jdbcType=VARCHAR},
       </if>
@@ -202,7 +218,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Worms">
     update worms
-    set `text` = #{text,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      `text` = #{text,jdbcType=VARCHAR},
       hits = #{hits,jdbcType=INTEGER},
       bandwidth = #{bandwidth,jdbcType=BIGINT},
       lastvisit = #{lastvisit,jdbcType=VARCHAR}

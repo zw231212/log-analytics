@@ -28,6 +28,7 @@ public class RobotServiceImpl extends BaseService implements RobotService {
       size = 10;
     }
     RobotExample example = new RobotExample();
+    example.createCriteria().andYearMonthIn(dates);
     example.setOrderByClause("hits DESC");
 
     PageHelper.startPage(number, size);

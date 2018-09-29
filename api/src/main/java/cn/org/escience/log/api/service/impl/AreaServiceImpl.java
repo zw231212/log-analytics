@@ -29,7 +29,7 @@ public class AreaServiceImpl extends BaseService implements AreaService {
     }
     DomainExample example = new DomainExample();
     example.setOrderByClause("pages DESC");
-
+    example.createCriteria().andYearMonthIn(dates);
     PageHelper.startPage(number, size);
 
     List<Domain> domains = domainMapper.selectByExample(example);

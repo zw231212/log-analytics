@@ -2,36 +2,15 @@
 *
 * Screen.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
-public class Screen {
-    /**
-     * 
-     */
-    private String size;
-
+public class Screen extends ScreenKey {
     /**
      * 
      */
     private Integer hits;
-
-    /**
-     * 
-     * @return size 
-     */
-    public String getSize() {
-        return size;
-    }
-
-    /**
-     * 
-     * @param size 
-     */
-    public void setSize(String size) {
-        this.size = size == null ? null : size.trim();
-    }
 
     /**
      * 

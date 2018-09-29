@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.SearchwordsMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Searchwords">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="words" jdbcType="VARCHAR" property="words" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
   </resultMap>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, words, hits
+    id, `year_month`, words, hits
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.SearchwordsExample" resultMap="BaseResultMap">
     select
@@ -98,16 +99,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Searchwords">
-    insert into searchwords (id, words, hits
-      )
-    values (#{id,jdbcType=INTEGER}, #{words,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}
-      )
+    insert into searchwords (id, `year_month`, words, 
+      hits)
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{words,jdbcType=VARCHAR}, 
+      #{hits,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Searchwords">
     insert into searchwords
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="words != null">
         words,
@@ -119,6 +123,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="words != null">
         #{words,jdbcType=VARCHAR},
@@ -140,6 +147,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.words != null">
         words = #{record.words,jdbcType=VARCHAR},
       </if>
@@ -154,6 +164,7 @@
   <update id="updateByExample" parameterType="map">
     update searchwords
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       words = #{record.words,jdbcType=VARCHAR},
       hits = #{record.hits,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -163,6 +174,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Searchwords">
     update searchwords
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="words != null">
         words = #{words,jdbcType=VARCHAR},
       </if>
@@ -174,7 +188,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Searchwords">
     update searchwords
-    set words = #{words,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      words = #{words,jdbcType=VARCHAR},
       hits = #{hits,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -2,16 +2,11 @@
 *
 * Filetypes.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
-public class Filetypes {
-    /**
-     * 
-     */
-    private String type;
-
+public class Filetypes extends FiletypesKey {
     /**
      * 
      */
@@ -31,22 +26,6 @@ public class Filetypes {
      * 
      */
     private Long bwaftercompress;
-
-    /**
-     * 
-     * @return type 
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * 
-     * @param type 
-     */
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
 
     /**
      * 

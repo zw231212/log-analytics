@@ -2,16 +2,11 @@
 *
 * Origin.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
-public class Origin {
-    /**
-     * 
-     */
-    private String from;
-
+public class Origin extends OriginKey {
     /**
      * 
      */
@@ -21,22 +16,6 @@ public class Origin {
      * 
      */
     private Integer hits;
-
-    /**
-     * 
-     * @return from 
-     */
-    public String getFrom() {
-        return from;
-    }
-
-    /**
-     * 
-     * @param from 
-     */
-    public void setFrom(String from) {
-        this.from = from == null ? null : from.trim();
-    }
 
     /**
      * 

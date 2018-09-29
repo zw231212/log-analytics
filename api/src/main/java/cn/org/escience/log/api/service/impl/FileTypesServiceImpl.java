@@ -20,6 +20,7 @@ public class FileTypesServiceImpl extends BaseService implements FileTypesServic
   public List<Filetypes> findAll(List<String> dates) {
     dates = ServiceUtil.checkDates(dates);
     FiletypesExample filetypesExample = new FiletypesExample();
+    filetypesExample.createCriteria().andYearMonthIn(dates);
     filetypesExample.setOrderByClause("hits DESC");
     List<Filetypes> filetypes = filetypesMapper.selectByExample(filetypesExample);
     return filetypes;

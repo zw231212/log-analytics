@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.PagerefMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Pageref">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="pages" jdbcType="INTEGER" property="pages" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, pages, hits
+    id, `year_month`, url, pages, hits
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.PagerefExample" resultMap="BaseResultMap">
     select
@@ -99,16 +100,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Pageref">
-    insert into pageref (id, url, pages, 
-      hits)
-    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{pages,jdbcType=INTEGER}, 
-      #{hits,jdbcType=INTEGER})
+    insert into pageref (id, `year_month`, url, 
+      pages, hits)
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{pages,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Pageref">
     insert into pageref
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="url != null">
         url,
@@ -123,6 +127,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
@@ -147,6 +154,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
@@ -164,6 +174,7 @@
   <update id="updateByExample" parameterType="map">
     update pageref
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       pages = #{record.pages,jdbcType=INTEGER},
       hits = #{record.hits,jdbcType=INTEGER}
@@ -174,6 +185,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Pageref">
     update pageref
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
@@ -188,7 +202,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Pageref">
     update pageref
-    set url = #{url,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
       pages = #{pages,jdbcType=INTEGER},
       hits = #{hits,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

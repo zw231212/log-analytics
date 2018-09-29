@@ -29,6 +29,7 @@ public class HostServiceImpl extends BaseService implements HostService {
     }
     VisitorsExample example = new VisitorsExample();
     example.setOrderByClause(order);
+    example.createCriteria().andYearMonthIn(dates);
 
     PageHelper.startPage(number, size);
 

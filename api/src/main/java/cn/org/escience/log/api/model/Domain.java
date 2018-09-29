@@ -2,16 +2,11 @@
 *
 * Domain.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
-public class Domain {
-    /**
-     * 
-     */
-    private String code;
-
+public class Domain extends DomainKey {
     /**
      * 
      */
@@ -26,22 +21,6 @@ public class Domain {
      * 
      */
     private Long bandwidth;
-
-    /**
-     * 
-     * @return code 
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * 
-     * @param code 
-     */
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
 
     /**
      * 

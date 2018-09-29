@@ -2,7 +2,7 @@
 *
 * GeneralExample.java
 * Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-21
+* @date 2018-09-29
 */
 package cn.org.escience.log.api.model;
 
@@ -27,7 +27,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public GeneralExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -35,7 +35,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -43,7 +43,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -51,7 +51,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -59,7 +59,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public boolean isDistinct() {
         return distinct;
@@ -67,7 +67,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -75,7 +75,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -83,7 +83,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -93,7 +93,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -105,7 +105,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -114,7 +114,7 @@ public class GeneralExample {
 
     /**
      *
-     * @mbg.generated 2018-09-21
+     * @mbg.generated 2018-09-29
      */
     public void clear() {
         oredCriteria.clear();
@@ -123,7 +123,7 @@ public class GeneralExample {
     }
 
     /**
-     * general 2018-09-21
+     * general 2018-09-29
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -848,7 +848,7 @@ public class GeneralExample {
     }
 
     /**
-     * general 2018-09-21
+     * general 2018-09-29
      */
     public static class Criterion {
         private String condition;

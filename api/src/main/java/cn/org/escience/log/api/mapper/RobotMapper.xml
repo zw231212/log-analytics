@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.RobotMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Robot">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
     <result column="bandwidth" jdbcType="BIGINT" property="bandwidth" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `name`, hits, bandwidth, lastvisit, hitsrobots
+    id, `year_month`, `name`, hits, bandwidth, lastvisit, hitsrobots
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.RobotExample" resultMap="BaseResultMap">
     select
@@ -101,18 +102,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Robot">
-    insert into robot (id, `name`, hits, 
-      bandwidth, lastvisit, hitsrobots
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, 
-      #{bandwidth,jdbcType=BIGINT}, #{lastvisit,jdbcType=VARCHAR}, #{hitsrobots,jdbcType=INTEGER}
-      )
+    insert into robot (id, `year_month`, `name`, 
+      hits, bandwidth, lastvisit, 
+      hitsrobots)
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}, #{lastvisit,jdbcType=VARCHAR}, 
+      #{hitsrobots,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Robot">
     insert into robot
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="name != null">
         `name`,
@@ -133,6 +137,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -163,6 +170,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.name != null">
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -186,6 +196,7 @@
   <update id="updateByExample" parameterType="map">
     update robot
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       hits = #{record.hits,jdbcType=INTEGER},
       bandwidth = #{record.bandwidth,jdbcType=BIGINT},
@@ -198,6 +209,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Robot">
     update robot
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
@@ -218,7 +232,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Robot">
     update robot
-    set `name` = #{name,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       hits = #{hits,jdbcType=INTEGER},
       bandwidth = #{bandwidth,jdbcType=BIGINT},
       lastvisit = #{lastvisit,jdbcType=VARCHAR},

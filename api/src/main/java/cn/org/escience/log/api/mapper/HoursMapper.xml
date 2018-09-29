@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.org.escience.log.api.mapper.HoursMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Hours">
+    <id column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <id column="hour" jdbcType="TINYINT" property="hour" />
     <result column="pages" jdbcType="INTEGER" property="pages" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    `hour`, pages, hits, bandwidth
+    `year_month`, `hour`, pages, hits, bandwidth
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.HoursExample" resultMap="BaseResultMap">
     select
@@ -82,15 +83,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.org.escience.log.api.model.HoursKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from hours
-    where `hour` = #{hour,jdbcType=TINYINT}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `hour` = #{hour,jdbcType=TINYINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+  <delete id="deleteByPrimaryKey" parameterType="cn.org.escience.log.api.model.HoursKey">
     delete from hours
-    where `hour` = #{hour,jdbcType=TINYINT}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `hour` = #{hour,jdbcType=TINYINT}
   </delete>
   <delete id="deleteByExample" parameterType="cn.org.escience.log.api.model.HoursExample">
     delete from hours
@@ -99,14 +102,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Hours">
-    insert into hours (`hour`, pages, hits, 
-      bandwidth)
-    values (#{hour,jdbcType=TINYINT}, #{pages,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, 
-      #{bandwidth,jdbcType=BIGINT})
+    insert into hours (`year_month`, `hour`, pages, 
+      hits, bandwidth)
+    values (#{yearMonth,jdbcType=VARCHAR}, #{hour,jdbcType=TINYINT}, #{pages,jdbcType=INTEGER}, 
+      #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Hours">
     insert into hours
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        `year_month`,
+      </if>
       <if test="hour != null">
         `hour`,
       </if>
@@ -121,6 +127,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="hour != null">
         #{hour,jdbcType=TINYINT},
       </if>
@@ -144,6 +153,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update hours
     <set>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.hour != null">
         `hour` = #{record.hour,jdbcType=TINYINT},
       </if>
@@ -163,7 +175,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update hours
-    set `hour` = #{record.hour,jdbcType=TINYINT},
+    set `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      `hour` = #{record.hour,jdbcType=TINYINT},
       pages = #{record.pages,jdbcType=INTEGER},
       hits = #{record.hits,jdbcType=INTEGER},
       bandwidth = #{record.bandwidth,jdbcType=BIGINT}
@@ -184,13 +197,15 @@
         bandwidth = #{bandwidth,jdbcType=BIGINT},
       </if>
     </set>
-    where `hour` = #{hour,jdbcType=TINYINT}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `hour` = #{hour,jdbcType=TINYINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Hours">
     update hours
     set pages = #{pages,jdbcType=INTEGER},
       hits = #{hits,jdbcType=INTEGER},
       bandwidth = #{bandwidth,jdbcType=BIGINT}
-    where `hour` = #{hour,jdbcType=TINYINT}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and `hour` = #{hour,jdbcType=TINYINT}
   </update>
 </mapper>

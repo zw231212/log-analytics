@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.org.escience.log.api.mapper.ErrorsMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Errors">
+    <id column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <id column="code" jdbcType="VARCHAR" property="code" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
     <result column="bandwidth" jdbcType="BIGINT" property="bandwidth" />
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    code, hits, bandwidth
+    `year_month`, code, hits, bandwidth
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.ErrorsExample" resultMap="BaseResultMap">
     select
@@ -81,15 +82,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.org.escience.log.api.model.ErrorsKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from errors
-    where code = #{code,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="cn.org.escience.log.api.model.ErrorsKey">
     delete from errors
-    where code = #{code,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.org.escience.log.api.model.ErrorsExample">
     delete from errors
@@ -98,14 +101,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Errors">
-    insert into errors (code, hits, bandwidth
-      )
-    values (#{code,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}
-      )
+    insert into errors (`year_month`, code, hits, 
+      bandwidth)
+    values (#{yearMonth,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, 
+      #{bandwidth,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Errors">
     insert into errors
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        `year_month`,
+      </if>
       <if test="code != null">
         code,
       </if>
@@ -117,6 +123,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
@@ -137,6 +146,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update errors
     <set>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.code != null">
         code = #{record.code,jdbcType=VARCHAR},
       </if>
@@ -153,7 +165,8 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update errors
-    set code = #{record.code,jdbcType=VARCHAR},
+    set `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
       hits = #{record.hits,jdbcType=INTEGER},
       bandwidth = #{record.bandwidth,jdbcType=BIGINT}
     <if test="_parameter != null">
@@ -170,12 +183,14 @@
         bandwidth = #{bandwidth,jdbcType=BIGINT},
       </if>
     </set>
-    where code = #{code,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Errors">
     update errors
     set hits = #{hits,jdbcType=INTEGER},
       bandwidth = #{bandwidth,jdbcType=BIGINT}
-    where code = #{code,jdbcType=VARCHAR}
+    where `year_month` = #{yearMonth,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>

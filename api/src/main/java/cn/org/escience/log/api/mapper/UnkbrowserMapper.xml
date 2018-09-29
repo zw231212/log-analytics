@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.UnkbrowserMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Unkbrowser">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="agent" jdbcType="VARCHAR" property="agent" />
     <result column="lastvisit" jdbcType="VARCHAR" property="lastvisit" />
   </resultMap>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, agent, lastvisit
+    id, `year_month`, agent, lastvisit
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.UnkbrowserExample" resultMap="BaseResultMap">
     select
@@ -98,16 +99,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Unkbrowser">
-    insert into unkbrowser (id, agent, lastvisit
-      )
-    values (#{id,jdbcType=INTEGER}, #{agent,jdbcType=VARCHAR}, #{lastvisit,jdbcType=VARCHAR}
-      )
+    insert into unkbrowser (id, `year_month`, agent, 
+      lastvisit)
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{agent,jdbcType=VARCHAR}, 
+      #{lastvisit,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Unkbrowser">
     insert into unkbrowser
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="agent != null">
         agent,
@@ -119,6 +123,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="agent != null">
         #{agent,jdbcType=VARCHAR},
@@ -140,6 +147,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.agent != null">
         agent = #{record.agent,jdbcType=VARCHAR},
       </if>
@@ -154,6 +164,7 @@
   <update id="updateByExample" parameterType="map">
     update unkbrowser
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       agent = #{record.agent,jdbcType=VARCHAR},
       lastvisit = #{record.lastvisit,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -163,6 +174,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Unkbrowser">
     update unkbrowser
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="agent != null">
         agent = #{agent,jdbcType=VARCHAR},
       </if>
@@ -174,7 +188,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Unkbrowser">
     update unkbrowser
-    set agent = #{agent,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      agent = #{agent,jdbcType=VARCHAR},
       lastvisit = #{lastvisit,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

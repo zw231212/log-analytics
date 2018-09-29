@@ -3,6 +3,7 @@
 <mapper namespace="cn.org.escience.log.api.mapper.VisitorsMapper">
   <resultMap id="BaseResultMap" type="cn.org.escience.log.api.model.Visitors">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_month" jdbcType="VARCHAR" property="yearMonth" />
     <result column="host" jdbcType="VARCHAR" property="host" />
     <result column="pages" jdbcType="INTEGER" property="pages" />
     <result column="hits" jdbcType="INTEGER" property="hits" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `host`, pages, hits, bandwidth, lastvisit, startlastvisit, lastpage
+    id, `year_month`, `host`, pages, hits, bandwidth, lastvisit, startlastvisit, lastpage
   </sql>
   <select id="selectByExample" parameterType="cn.org.escience.log.api.model.VisitorsExample" resultMap="BaseResultMap">
     select
@@ -103,18 +104,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.org.escience.log.api.model.Visitors">
-    insert into visitors (id, `host`, pages, 
-      hits, bandwidth, lastvisit, 
-      startlastvisit, lastpage)
-    values (#{id,jdbcType=INTEGER}, #{host,jdbcType=VARCHAR}, #{pages,jdbcType=INTEGER}, 
-      #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}, #{lastvisit,jdbcType=VARCHAR}, 
-      #{startlastvisit,jdbcType=VARCHAR}, #{lastpage,jdbcType=VARCHAR})
+    insert into visitors (id, `year_month`, `host`, 
+      pages, hits, bandwidth, 
+      lastvisit, startlastvisit, lastpage
+      )
+    values (#{id,jdbcType=INTEGER}, #{yearMonth,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, 
+      #{pages,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, #{bandwidth,jdbcType=BIGINT}, 
+      #{lastvisit,jdbcType=VARCHAR}, #{startlastvisit,jdbcType=VARCHAR}, #{lastpage,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.org.escience.log.api.model.Visitors">
     insert into visitors
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="yearMonth != null">
+        `year_month`,
       </if>
       <if test="host != null">
         `host`,
@@ -141,6 +147,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
       </if>
       <if test="host != null">
         #{host,jdbcType=VARCHAR},
@@ -177,6 +186,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.yearMonth != null">
+        `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="record.host != null">
         `host` = #{record.host,jdbcType=VARCHAR},
       </if>
@@ -206,6 +218,7 @@
   <update id="updateByExample" parameterType="map">
     update visitors
     set id = #{record.id,jdbcType=INTEGER},
+      `year_month` = #{record.yearMonth,jdbcType=VARCHAR},
       `host` = #{record.host,jdbcType=VARCHAR},
       pages = #{record.pages,jdbcType=INTEGER},
       hits = #{record.hits,jdbcType=INTEGER},
@@ -220,6 +233,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.org.escience.log.api.model.Visitors">
     update visitors
     <set>
+      <if test="yearMonth != null">
+        `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      </if>
       <if test="host != null">
         `host` = #{host,jdbcType=VARCHAR},
       </if>
@@ -246,7 +262,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.org.escience.log.api.model.Visitors">
     update visitors
-    set `host` = #{host,jdbcType=VARCHAR},
+    set `year_month` = #{yearMonth,jdbcType=VARCHAR},
+      `host` = #{host,jdbcType=VARCHAR},
       pages = #{pages,jdbcType=INTEGER},
       hits = #{hits,jdbcType=INTEGER},
       bandwidth = #{bandwidth,jdbcType=BIGINT},
