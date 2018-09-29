@@ -27,6 +27,7 @@ public class ErrorServiceImpl extends BaseService implements ErrorService {
   public List<Errors> findAll(List<String> dates) {
     dates = ServiceUtil.checkDates(dates);
     ErrorsExample errorsExample = new ErrorsExample();
+    errorsExample.createCriteria().andYearMonthIn(dates);
     errorsExample.setOrderByClause("hits DESC");
     List<Errors> errors = errorsMapper.selectByExample(errorsExample);
     return errors;

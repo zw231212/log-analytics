@@ -21,7 +21,7 @@ public class SessionsServiceImpl extends BaseService implements SessionsService 
     dates = ServiceUtil.checkDates(dates);
     SessionExample example = new SessionExample();
     example.createCriteria().andYearMonthIn(dates);
-    example.setOrderByClause("hits DESC");
+    example.setOrderByClause("visits DESC");
     List<Session> sessions = sessionMapper.selectByExample(example);
     return sessions;
   }
