@@ -1,5 +1,7 @@
 package cn.org.escience.log.api.service;
 
+import cn.org.escience.log.api.config.AppConstant;
+import cn.org.escience.log.api.config.AppConstant.DdsdbConf;
 import cn.org.escience.log.api.config.AppConstant.Mybatis;
 import cn.org.escience.log.api.config.ApplicationConfiguration;
 import cn.org.escience.log.ddsdb.model.DynamicDataSource;
@@ -18,41 +20,50 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
  */
 public class BaseService {
 
+  private static TransactionFactory tf = new JdbcTransactionFactory();
+
   protected String database;//也就是传递的id
   protected SqlSession sqlSession;
+  protected SqlSessionFactory ssf;
+  protected DynamicDataSource ds;
+  protected Configuration conf;
+  protected Environment env;
   private static ServiceManager sm = ServiceManager.getInstance();
 
   public BaseService(String database){
-    this.database = database;
-    buildConfAndGetSqlSession();
+    this(DdsdbConf.host,DdsdbConf.port,DdsdbConf.user, DdsdbConf.pass, database);
   }
 
-  protected Environment getEnv(){
-    DynamicDataSource ds = new DynamicDataSource(database);
-    TransactionFactory tf = new JdbcTransactionFactory();
-    Environment env = new Environment.Builder(ds.getDatabase())
+  private BaseService(String host, Integer port, String user, String pass, String database){
+      this.database = database;
+      ds = new DynamicDataSource(host, port, user, pass, database);
+      buildConfAndGetSqlSession();
+  }
+
+  protected void buildEnv(){
+    env = new Environment.Builder(ds.getDatabase())
         .dataSource(ds)
         .transactionFactory(tf)
         .build()
         ;
-    return env;
   }
 
   protected void buildConfAndGetSqlSession(){
     //方法运行前
-    Environment env = getEnv();
-    Configuration conf = new Configuration(env);
+    buildEnv();
+    conf = new Configuration(env);
     conf.setCacheEnabled(Mybatis.cacheEnabled);
     conf.setMapUnderscoreToCamelCase(Mybatis.mapUnderscoreToCamelCase);
     conf.setLazyLoadingEnabled(Mybatis.lazyLoadingEnable);
     conf.addMappers(Mybatis.mapperPackage);
 
+    //加入分页插件
     PageInterceptor pageInterceptor = new PageInterceptor();
     pageInterceptor.setProperties(ApplicationConfiguration.pagehelperProps);
 
     conf.addInterceptor(pageInterceptor);
 
-    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(conf);
+    ssf = new SqlSessionFactoryBuilder().build(conf);
     sqlSession = ssf.openSession(true);
     sm.addRelaseSession(sqlSession);
 

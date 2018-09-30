@@ -2,7 +2,9 @@ package cn.org.escience.log.api;
 
 
 import cn.org.escience.log.api.config.AppConstant;
+import cn.org.escience.log.api.config.AppConstant.DdsdbConf;
 import cn.org.escience.log.api.config.AppConstant.Module;
+import cn.org.escience.log.ddsdb.model.DataSourceConstant;
 import cn.org.escience.log.ddsdb.utils.StringUtil;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
@@ -30,8 +32,9 @@ public class LogAPIApplication {
     //获取配置文件信息,在config里面的AppConstant
     //检查配置文件信息
 
-    //配置server信息并加载server
-
+    //各个模块的配置文件信息初始化
+    initParams();
+    //配置server信息并加载server，如果是jar运行的话，应该不能用WebAppContext,到时候在另外写
     String contextPath = "/";
     if(!StringUtil.isNullOrBlank(AppConstant.Server.contextPath)){
       contextPath = AppConstant.Server.contextPath;
@@ -85,61 +88,22 @@ public class LogAPIApplication {
     return userDir.substring(lastIndex+1);
   }
 
+  /**
+   * 获取当前用户执行目录
+   * @return
+   */
   private static String getUserDir(){
     return System.getProperty("user.dir");
   }
 
-  public static void someTest(){
-    System.out.println("启动服务后标准输出测试！");
-    //jetty启动服务
-//    Server server = new Server(8989);
-//    server.setHandler(new BrowserController());
-//    server.start();
-//    server.join();
-
-//    URI baseUri = UriBuilder.fromUri("http://localhost/").port(9998).build();
-//    Server server = JettyHttpContainerFactory.createServer(baseUri, new JerseyConfig());
-//    server.start();
-
-    //
-    // 若使用 Jdk Http Server请去掉下面的注释
-    // JdkHttpServerFactory.createHttpServer(URI.create(BASE_URI), new
-    // RestApplication());
-
-    // 若使用 Grizzly Http Server请去掉下面的注释
-    // GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), new
-    // RestApplication());
-
-    // 若使用 Simple Http Server请去掉下面的注释
-    // SimpleContainerFactory.create(URI.create(BASE_URI), new
-    // RestApplication());
-
-    /**
-     * //设置context path
-     *     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-     *     context.setContextPath(contextPath);
-     *
-     *     server.setHandler(context);
-     *
-     *     ServletHolder servlet = context.addServlet(ServletContainer.class,"/v1/*");
-     *     servlet.setInitOrder(1);
-     *     servlet.setInitParameter("jersey.config.server.provider.packages",
-     *         AppConstant.Server.basePackage);
-     *     servlet.setInitParameter("javax.ws.rs.Application",
-     *         "cn.org.escience.log.api.web.conf.JerseyConfig");
-     *
-     *     //设置资源文件路径
-     *     HandlerWrapper wrapper = new HandlerWrapper();
-     *     context.insertHandler(wrapper);
-     *
-     *     ResourceHandler resourceHandler = new ResourceHandler();
-     *     resourceHandler.setDirectoriesListed(false);
-     *     resourceHandler.setWelcomeFiles(new String[]{"index.html"});
-     *     resourceHandler.setResourceBase(resourcePath);
-     *
-     *     //JettyHttpContainerFactory.createServer(baseUri, jerseyConfig, false);
-     *
-     */
+  /**
+   * 初始化参数信息
+   */
+  public static void initParams(){
+    logger.info("参数初始化！");
+    DataSourceConstant.initParamByOtherModule(DdsdbConf.host,DdsdbConf.port,DdsdbConf.user,DdsdbConf.pass,
+        DdsdbConf.dialect, DdsdbConf.querystring, DdsdbConf.driverClass,
+        DdsdbConf.maxConn, DdsdbConf.minConn,DdsdbConf.defaultDatabase);
   }
 
 }

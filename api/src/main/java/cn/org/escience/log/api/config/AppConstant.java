@@ -28,8 +28,21 @@ public class AppConstant {
   public static final String  CROS_ALLOW_CREDENTIALS_KEY =  "cors.allowCredentials";
   public static final String  CROS_ALLOW_METHODS_KEY =  "cors.allowMethods";
   public static final String  CROS_MAXAGE_KEY =  "cors.maxAge";
+  public static final String  DDSDB_HOST_KEY =  "ddsdb.host";
+  public static final String  DDSDB_PORT_KEY =  "ddsdb.port";
+  public static final String  DDSDB_USER_KEY =  "ddsdb.user";
+  public static final String  DDSDB_PASS_KEY =  "ddsdb.pass";
+  public static final String  DDSDB_DEFAULT_DATABASE_KEY =  "ddsdb.defaultDatabase";
+  public static final String  DDSDB_DIALECT_KEY =  "ddsdb.dialect";
+  public static final String  DDSDB_QUERYSTRING_KEY =  "ddsdb.querystring";
+  public static final String  DDSDB_DRIVERCLASS_KEY =  "ddsdb.driverClass";
+  public static final String  DDSDB_MAXCONN_KEY =  "ddsdb.maxConn";
+  public static final String  DDSDB_MINCONN_KEY =  "ddsdb.minConn";
 
 
+  /**
+   * 模块相关的参数信息配置
+   */
   public static class Module{
     public static String name = ApplicationConfiguration.get(MODULE_NAME_KEY);
     public static String resources = ApplicationConfiguration.get(MODULE_RESOURCE_KEY);
@@ -93,6 +106,34 @@ public class AppConstant {
      public static String allowOrigin  = ApplicationConfiguration.get(CROS_ALLOW_ORIGIN_KEY);
      public static String allowHeaders  = ApplicationConfiguration.get(CROS_ALLOW_HEADERS_KEY);
      public static String allowCredentials  = ApplicationConfiguration.get(CROS_ALLOW_CREDENTIALS_KEY);
+   }
+
+   public static class DdsdbConf{
+    public static String host = ApplicationConfiguration.get(DDSDB_HOST_KEY);
+     public static Integer port= 3306;
+     public static String user= ApplicationConfiguration.get(DDSDB_USER_KEY);
+     public static String pass= ApplicationConfiguration.get(DDSDB_PASS_KEY);
+     public static String defaultDatabase = ApplicationConfiguration.get(DDSDB_DEFAULT_DATABASE_KEY);
+     public static String dialect = ApplicationConfiguration.get(DDSDB_DIALECT_KEY);
+     public static String querystring = ApplicationConfiguration.get(DDSDB_QUERYSTRING_KEY);
+     public static String driverClass = ApplicationConfiguration.get(DDSDB_DRIVERCLASS_KEY);
+     public static Integer maxConn= 10;
+     public static Integer minConn= 1;
+
+     static {
+       String s = ApplicationConfiguration.get(DDSDB_PORT_KEY);
+       String s1 = ApplicationConfiguration.get(DDSDB_MAXCONN_KEY);
+       String s2 = ApplicationConfiguration.get(DDSDB_MINCONN_KEY);
+       if(!StringUtil.isNullOrBlank(s)){
+         port = Integer.parseInt(s);
+       }
+       if(!StringUtil.isNullOrBlank(s1)){
+         maxConn = Integer.parseInt(s1);
+       }
+       if(!StringUtil.isNullOrBlank(s2)){
+         minConn = Integer.parseInt(s2);
+       }
+     }
    }
 
    public static List<String> queryTypes = Arrays.asList("month", "day" , "year");
