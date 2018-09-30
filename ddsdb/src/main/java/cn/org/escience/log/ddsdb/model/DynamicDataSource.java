@@ -22,10 +22,10 @@ public class DynamicDataSource extends MysqlDataSource {
   private String dialect;
   private String querystring;
   private String driverClass;
-  private String url;
 
   private Integer maxConn;
   private Integer minConn;
+  private String url;
 
 
   private Map<String, Object> parmas = new HashMap<>();
@@ -37,20 +37,20 @@ public class DynamicDataSource extends MysqlDataSource {
 
   }
 
-  public DynamicDataSource(String host,int port,String user,String pass,String database){
-
+  public DynamicDataSource(String host, Integer port, String user, String pass, String dialect, String querystring,
+      String driverClass, Integer maxConn, Integer minConn, String database){
     this.host = host;
     this.port = port;
     this.user = user;
     this.pass = pass;
     this.database = database;
 
-    this.dialect = DataSourceConstant.DEFAULT_DIALECT;
-    this.querystring = DataSourceConstant.DEFAULT_QUERYSTRING;
-    this.driverClass = DataSourceConstant.DEFAULT_DRIVERCLASS;
+    this.dialect = dialect;
+    this.querystring = querystring;
+    this.driverClass = driverClass;
 
-    this.maxConn = DataSourceConstant.DEFAULT_MAXCONN;
-    this.minConn = DataSourceConstant.DEFAULT_MINCONN;
+    this.maxConn = maxConn;
+    this.minConn = minConn;
 
     //组装参数
     parmas.put(DataSourceConstant.DB_HOST_KEY,this.host);
@@ -62,6 +62,30 @@ public class DynamicDataSource extends MysqlDataSource {
     if(querystring != null && !"".equals(querystring.trim())){
       this.url = url+"?"+querystring;
     }
+  }
+
+  public DynamicDataSource(String user, String pass){
+    this(DataSourceConstant.DEFAULT_HOST, DataSourceConstant.DEFAULT_PORT, user, pass,
+        DataSourceConstant.DEFAULT_DIALECT,
+        DataSourceConstant.DEFAULT_QUERYSTRING,
+        DataSourceConstant.DEFAULT_DRIVERCLASS,
+        DataSourceConstant.DEFAULT_MAXCONN,
+        DataSourceConstant.DEFAULT_MINCONN,
+        DataSourceConstant.DEFAULT_DATABASE
+    );
+  }
+
+  public DynamicDataSource(String host,int port,String user,String pass,String database){
+    this(host, port, user, pass,
+        DataSourceConstant.DEFAULT_DIALECT,
+        DataSourceConstant.DEFAULT_QUERYSTRING,
+        DataSourceConstant.DEFAULT_DRIVERCLASS,
+        DataSourceConstant.DEFAULT_MAXCONN,
+        DataSourceConstant.DEFAULT_MINCONN,
+        database
+        );
+
+
   }
 
   @Override
