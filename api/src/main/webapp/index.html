@@ -429,6 +429,24 @@ bg-white border-bottom shadow-sm">
         "hits":"文件数",
         "referer":"来源",
       }
+    },
+    {
+      "name":"下载的文件的信息数据",
+      "api":version+"/downloads/list",
+      "params":{
+        "id":"也就是各平台约定的唯一标号，在日志解析时候就指定的config",
+        "begin":"年份，XXXX四位数字来表示,month,月份，不足的用0来补足,这里的参数是年份+月份，字符串，中间使用横杆“-”来分割",
+        "offset":"偏移量，也就是偏移当前月份多少个月，整数，从0开始",
+        "number":"分页页码",
+        "size":"分页大小"
+      },
+      "fields":{
+        "yearmonth":"时间信息",
+        "url":"错误码",
+        "downloads":"x下载数",
+        "hits":"文件数",
+        "bandwidth":"字节数",
+      }
     }
   ];
   var infoVm = new Vue({
