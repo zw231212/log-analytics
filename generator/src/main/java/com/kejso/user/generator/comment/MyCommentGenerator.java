@@ -113,7 +113,7 @@ public class MyCommentGenerator implements CommentGenerator{
    *@Title addConfigurationProperties
    *@Description: 从该配置中的任何属性添加此实例的属性CommentGenerator配置。
    *              这个方法将在任何其他方法之前被调用。
-   *@Author fendo
+   *@Author zzq
    *@Date 2017年10月5日 下午3:45:58
    *@return
    *@throws
@@ -129,7 +129,7 @@ public class MyCommentGenerator implements CommentGenerator{
    *
    *@Title getDateString
    *@Description: 此方法返回格式化的日期字符串以包含在Javadoc标记中和XML注释。 如果您不想要日期，则可以返回null在这些文档元素中。
-   *@Author fendo
+   *@Author zzq
    *@Date 2017年10月5日 下午3:45:58
    *@return
    *@throws
@@ -146,7 +146,7 @@ public class MyCommentGenerator implements CommentGenerator{
    *
    *@Title addJavadocTag
    *@Description: 此方法为其添加了自定义javadoc标签。
-   *@Author fendo
+   *@Author zzq
    *@Date 2017年10月5日 下午3:49:05
    *@param javaElement
    *@param markAsDoNotDelete
@@ -256,7 +256,7 @@ public class MyCommentGenerator implements CommentGenerator{
     compilationUnit.addFileCommentLine("/*");
     compilationUnit.addFileCommentLine("*");
     compilationUnit.addFileCommentLine("* "+compilationUnit.getType().getShortName()+".java");
-    compilationUnit.addFileCommentLine("* Copyright(C) 2017-2020 fendo公司");
+    compilationUnit.addFileCommentLine("* Copyright(C) 2017-2020 http://www.escience.org.cn");
     compilationUnit.addFileCommentLine("* @date "+sdf.format(new Date())+"");
     compilationUnit.addFileCommentLine("*/");
   }

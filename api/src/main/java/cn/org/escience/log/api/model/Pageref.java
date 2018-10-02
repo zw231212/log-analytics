@@ -1,8 +1,8 @@
 /*
 *
 * Pageref.java
-* Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-29
+* Copyright(C) 2017-2020 http://www.escience.org.cn
+* @date 2018-10-02
 */
 package cn.org.escience.log.api.model;
 

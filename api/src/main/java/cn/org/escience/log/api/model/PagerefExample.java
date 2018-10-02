@@ -1,8 +1,8 @@
 /*
 *
 * PagerefExample.java
-* Copyright(C) 2017-2020 fendo鍏徃
-* @date 2018-09-29
+* Copyright(C) 2017-2020 http://www.escience.org.cn
+* @date 2018-10-02
 */
 package cn.org.escience.log.api.model;
 
@@ -27,7 +27,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public PagerefExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -35,7 +35,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -43,7 +43,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -51,7 +51,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -59,7 +59,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public boolean isDistinct() {
         return distinct;
@@ -67,7 +67,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -75,7 +75,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -83,7 +83,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -93,7 +93,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -105,7 +105,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -114,7 +114,7 @@ public class PagerefExample {
 
     /**
      *
-     * @mbg.generated 2018-09-29
+     * @mbg.generated 2018-10-02
      */
     public void clear() {
         oredCriteria.clear();
@@ -123,7 +123,7 @@ public class PagerefExample {
     }
 
     /**
-     * pageref 2018-09-29
+     * pageref 2018-10-02
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -498,7 +498,7 @@ public class PagerefExample {
     }
 
     /**
-     * pageref 2018-09-29
+     * pageref 2018-10-02
      */
     public static class Criterion {
         private String condition;
