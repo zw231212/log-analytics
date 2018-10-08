@@ -1,6 +1,7 @@
 package cn.org.escience.log.api.web.filter;
 
 import cn.org.escience.log.api.config.AppConstant;
+import cn.org.escience.log.api.config.AppConstant.Cros;
 import cn.org.escience.log.api.config.AppConstant.Server;
 import cn.org.escience.log.api.service.BaseService;
 import cn.org.escience.log.api.service.ServiceManager;
@@ -21,6 +22,8 @@ import java.util.Set;
 import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
@@ -36,7 +39,7 @@ import org.slf4j.LoggerFactory;
 @Provider
 //@PreMatching
 @Priority(value = 100000)
-public class ServiceFilter implements ContainerRequestFilter {
+public class ServiceFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
   private static final Logger logger = LoggerFactory.getLogger(ServiceFilter.class);
 
@@ -50,7 +53,6 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   @Override
   public void filter(ContainerRequestContext crc) throws IOException {
-
     String method = crc.getMethod().toUpperCase();
 //    UriInfo uriInfo = crc.getUriInfo();
 
@@ -144,6 +146,17 @@ public class ServiceFilter implements ContainerRequestFilter {
 
   }
 
+  public void filter(ContainerRequestContext creq, ContainerResponseContext cres)
+      throws IOException {
+    logger.debug("跨域服务信息返回过滤器");
+    cres.getHeaders().add("Access-Control-Allow-Origin", Cros.allowOrigin);
+    cres.getHeaders().add("Access-Control-Allow-Headers", Cros.allowHeaders);
+    cres.getHeaders().add("Access-Control-Allow-Credentials", Cros.allowCredentials);
+    cres.getHeaders().add("Access-Control-Allow-Methods", Cros.allowMethods);
+    cres.getHeaders().add("Access-Control-Max-Age", Cros.maxAge);
+  }
+
+
   /**
    * 给每个controller注入service
    * @param uriInfo 匹配的url相关的信息
@@ -183,7 +196,7 @@ public class ServiceFilter implements ContainerRequestFilter {
             continue;
           }
           boolean containResult = sm.checkApiServices(database);
-          
+
           BaseService service = null;
           boolean flag = false;
           if(containResult){ //从缓存里面获取服务接口数据

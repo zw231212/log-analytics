@@ -23,7 +23,7 @@ public class LogApplicationEventListener implements ApplicationEventListener {
 
   @Override
   public void onEvent(ApplicationEvent event) {
-    
+
   }
 
   @Override
@@ -51,7 +51,7 @@ public class LogApplicationEventListener implements ApplicationEventListener {
 
     String path = uri.toString();
     String httpMethod = uriInfo.getMatchedResourceMethod().getHttpMethod();
-    logger.info("请求信息 ：url:{}, method:{},请求处理类方法为：{}", path, httpMethod, method.toString());
+    logger.info("请求信息 ：url:{}, method:{},请求处理类方法为：{}", path, httpMethod, method.getName());
 
   }
 }

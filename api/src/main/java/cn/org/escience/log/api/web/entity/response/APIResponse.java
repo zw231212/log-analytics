@@ -13,7 +13,6 @@ import java.io.Serializable;
  * 后续需要再进行规范化
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class APIResponse implements Serializable{
@@ -22,7 +21,7 @@ public class APIResponse implements Serializable{
 
     private Meta meta= Message.SUCCESS_QUERY;
     private Object body;
-    private long costTimeMillis;
+//    private long costTimeMillis;
 
     private APIResponse(int code,String msg,Object data){
         this.meta = new Meta(code,msg);

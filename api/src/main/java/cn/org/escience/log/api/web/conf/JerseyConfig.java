@@ -1,15 +1,11 @@
 package cn.org.escience.log.api.web.conf;
 
 import cn.org.escience.log.api.config.AppConstant;
-import cn.org.escience.log.api.web.filter.ApiServiceCorsFilter;
-import cn.org.escience.log.api.web.filter.ReleaseResourceFilter;
 import cn.org.escience.log.api.web.filter.ServiceFilter;
 import cn.org.escience.log.api.web.interceptor.GzipInterceptor;
 import cn.org.escience.log.api.web.interceptor.ServiceInterceptor;
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -40,10 +36,8 @@ public class JerseyConfig extends ResourceConfig{
     ClientConfig clientConfig = new ClientConfig();
     clientConfig.register(ServiceInterceptor.class);
     clientConfig.register(GzipInterceptor.class);
-    
+
     clientConfig.register(ServiceFilter.class);
-    clientConfig.register(ReleaseResourceFilter.class);
-    clientConfig.register(ApiServiceCorsFilter.class);
     return ClientBuilder.newClient(clientConfig);
   }
 }

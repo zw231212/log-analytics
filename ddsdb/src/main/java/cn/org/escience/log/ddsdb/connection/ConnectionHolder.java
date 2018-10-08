@@ -80,7 +80,7 @@ public class ConnectionHolder {
 
       Map<Integer, Connection> ddsConns = connections.get(dds);
       int hashKey = conn.hashCode();
-      if(ddsConns==null || ddsConns.size()==0){
+      if(ddsConns == null || ddsConns.size() == 0){
         if(ddsConns == null){
           ddsConns = new HashMap<>();
         }
@@ -158,7 +158,7 @@ public class ConnectionHolder {
      */
     boolean result = addConnction(newConn, dds);
     if(result){
-      logger.info("在新的数据源中添加了一条数据库的连接");
+      logger.info("在新的数据源缓存中添加了一条数据库的连接");
     }
     return newConn;
   }

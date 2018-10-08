@@ -12,6 +12,7 @@ war {
         exclude '**/*.xml'
         exclude "**/.placeholder"
     }
+    metaInf { from 'src/main/webapp/META-INF/aop.xml' }
 }
 
 
@@ -60,7 +61,9 @@ dependencies{
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.12.v20180830'
     compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.12.v20180830'
 
-
+    //切面
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.13'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.13'
 
 
     // jersey-servlet

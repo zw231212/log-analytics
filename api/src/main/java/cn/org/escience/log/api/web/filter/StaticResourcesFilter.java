@@ -12,13 +12,13 @@ public class StaticResourcesFilter implements ContainerRequestFilter, ClientRequ
 
   @Override
   public void filter(ContainerRequestContext rc) throws IOException {
-    System.out.println("容器服务端静态资源过滤器");
-    System.out.println(rc.getUriInfo());
+//    System.out.println("容器服务端静态资源过滤器");
+//    System.out.println(rc.getUriInfo());
   }
 
   @Override
   public void filter(ClientRequestContext rc) throws IOException {
-    System.out.println("客户端请求静态资源过滤器");
+//    System.out.println("客户端请求静态资源过滤器");
 
   }
 }
