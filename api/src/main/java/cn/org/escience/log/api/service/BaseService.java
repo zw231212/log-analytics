@@ -1,13 +1,11 @@
 package cn.org.escience.log.api.service;
 
-import cn.org.escience.log.api.config.AppConstant;
 import cn.org.escience.log.api.config.AppConstant.DdsdbConf;
 import cn.org.escience.log.api.config.AppConstant.Mybatis;
-import cn.org.escience.log.api.config.ApplicationConfiguration;
+import cn.org.escience.log.api.config.AppConfiguration;
 import cn.org.escience.log.ddsdb.model.DynamicDataSource;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -59,7 +57,7 @@ public class BaseService {
 
     //加入分页插件
     PageInterceptor pageInterceptor = new PageInterceptor();
-    pageInterceptor.setProperties(ApplicationConfiguration.pagehelperProps);
+    pageInterceptor.setProperties(AppConfiguration.pagehelperProps);
 
     conf.addInterceptor(pageInterceptor);
 

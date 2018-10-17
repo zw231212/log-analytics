@@ -3,8 +3,8 @@ package cn.org.escience.log.api.config;
 import cn.org.escience.log.api.utils.PropertyLoaderUtil;
 import java.util.Properties;
 
-public class ApplicationConfiguration {
-  
+public class AppConfiguration {
+
   private static final String APP_CONFIG_NAME = "/application.properties";
   private static final String PAGEHELPER_CONFIG_NAME = "/pagehelper.properties";
 
