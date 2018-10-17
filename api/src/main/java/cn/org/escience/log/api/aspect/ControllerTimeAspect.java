@@ -54,7 +54,7 @@ public class ControllerTimeAspect {
       // 获取方法执行时间
     } catch (Throwable e) {
       e.printStackTrace();
-      obj = APIResponse.newFailInstance(Message.error(e.getMessage()));
+      obj = APIResponse.fail(Message.error(e.getMessage()));
     }
     end = System.currentTimeMillis() - start;
     String classAndMethod = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();

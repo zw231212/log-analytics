@@ -36,7 +36,7 @@ public class FileTypesController {
     }
     List<String> dates = DateUtil.getDates(begin, offset, type);
     List<Filetypes> filetypes = fileTypesService.findAll(dates);
-    return APIResponse.successInstance(filetypes);
+    return APIResponse.ok(filetypes);
   }
 
   /**

@@ -37,7 +37,7 @@ public class OsController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
     OsVo osVo = osService.findAll(dates);
 
-    return APIResponse.successInstance(osVo);
+    return APIResponse.ok(osVo);
   }
 
   /**

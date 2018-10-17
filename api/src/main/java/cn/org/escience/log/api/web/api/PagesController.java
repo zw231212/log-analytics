@@ -45,10 +45,10 @@ public class PagesController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
     //检查错误的类型
     if(!AppConstant.pagesActions.contains(action)){
-      return APIResponse.newFailInstance(Message.error("不支持的查询类型："+action+"，支持的查询类型有："+AppConstant.pagesActions));
+      return APIResponse.fail(Message.error("不支持的查询类型："+action+"，支持的查询类型有："+AppConstant.pagesActions));
     }
     PageInfo<Pages> pageInfo = pagesService.findAll(dates, number, size, action);
-    return APIResponse.successInstance(pageInfo);
+    return APIResponse.ok(pageInfo);
   }
 
   /**

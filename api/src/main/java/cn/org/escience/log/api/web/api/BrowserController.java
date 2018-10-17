@@ -40,7 +40,7 @@ public class BrowserController{
     List<String> dates = DateUtil.getDates(begin, offset, type);
     BrowserVo bvo = browserService.findAll(dates);
 
-    return APIResponse.successInstance(bvo);
+    return APIResponse.ok(bvo);
   }
 
   /**

@@ -44,7 +44,7 @@ public class AreaController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
 
     PageInfo<Domain> pageInfo = areaService.findAll(dates, number, size);
-    return APIResponse.successInstance(pageInfo);
+    return APIResponse.ok(pageInfo);
   }
 
   /**

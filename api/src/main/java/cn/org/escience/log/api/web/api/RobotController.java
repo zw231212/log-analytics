@@ -43,7 +43,7 @@ public class RobotController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
 
     PageInfo<Robot> pageInfo = robotService.findAll(dates, number, size);
-    return APIResponse.successInstance(pageInfo);
+    return APIResponse.ok(pageInfo);
   }
 
   /**

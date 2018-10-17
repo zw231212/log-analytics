@@ -42,7 +42,7 @@ public class ErrorController {
     //因为这个错误个数有限，直接查全部了
     List<Errors> errors = errorService.findAll(dates);
 
-    return APIResponse.successInstance(errors);
+    return APIResponse.ok(errors);
   }
 
 
@@ -66,12 +66,12 @@ public class ErrorController {
 
     //检查错误的类型
     if(!AppConstant.errorCodes.contains(code)){
-        return APIResponse.newFailInstance(Message.error("不支持的错误类型查询："+code+"，支持的错误类型有："+AppConstant.errorCodes));
+        return APIResponse.fail(Message.error("不支持的错误类型查询："+code+"，支持的错误类型有："+AppConstant.errorCodes));
     }
 
     ErrorDetailVo edvo = errorService.findDetailErrorPage(dates, number, size, code);
 
-    return APIResponse.successInstance(edvo);
+    return APIResponse.ok(edvo);
   }
 
 

@@ -39,18 +39,18 @@ public class APIResponse implements Serializable{
         return new APIResponse(meta,data);
     }
 
-    public static APIResponse successInstance(Object data){
+    public static APIResponse ok(Object data){
         return newInstance(Message.SUCCESS_QUERY,data);
     }
-    public static APIResponse successInstance(String msg,Object data){
+    public static APIResponse ok(String msg,Object data){
         return newInstance(DEFAULT_CODE,msg,data);
     }
 
-    public static APIResponse newFailInstance(int code,String msg){
+    public static APIResponse fail(int code,String msg){
         return newInstance(code,msg,null);
     }
 
-    public static APIResponse newFailInstance(Meta meta){
+    public static APIResponse fail(Meta meta){
         return newInstance(meta,null);
     }
 

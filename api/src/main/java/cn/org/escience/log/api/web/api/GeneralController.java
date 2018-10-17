@@ -44,7 +44,7 @@ public class GeneralController {
 
     List<General> generalList = generalService.findAll(dates, type);
 
-    return APIResponse.successInstance(generalList);
+    return APIResponse.ok(generalList);
   }
 
 
@@ -67,11 +67,11 @@ public class GeneralController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
 
     if(!AppConstant.orders.contains(order)){
-      return APIResponse.newFailInstance(Message.error("不支持的排序参数 "+order+" ,支持的排序参数有："+AppConstant.orders));
+      return APIResponse.fail(Message.error("不支持的排序参数 "+order+" ,支持的排序参数有："+AppConstant.orders));
     }
 
     PageInfo<Daily> pageInfo = dailyService.findAll(dates, number, size, type, order);
-    return APIResponse.successInstance(pageInfo);
+    return APIResponse.ok(pageInfo);
   }
 
   /**

@@ -37,7 +37,7 @@ public class SessionsController {
     List<String> dates = DateUtil.getDates(begin, offset, type);
     List<Session> sessions = sessionsService.findAll(dates);
 
-    return APIResponse.successInstance(sessions);
+    return APIResponse.ok(sessions);
   }
 
   /**
