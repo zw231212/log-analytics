@@ -453,7 +453,24 @@ public class DateUtil {
   }
 
 
-
+  /**
+   * 格式化时间
+   * @param dstr
+   * @param pattern
+   * @return
+   */
+  public static String getFormerDate(String dstr, String pattern) {
+    if(StringUtil.isNullOrBlank(pattern)){
+      pattern = "yyyy-MM-dd";
+    }
+    SimpleDateFormat format = new SimpleDateFormat(pattern);
+    try {
+      return format.format(format.parse(dstr));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return dstr;
+  }
 
   public static void main(String[] args) throws Exception {
     String dateStr = "2018-07-02";

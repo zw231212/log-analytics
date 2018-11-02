@@ -19,7 +19,7 @@ public class ServiceUtil {
       Calendar calendar = Calendar.getInstance();
       int year = calendar.get(Calendar.YEAR);
       int month = calendar.get(Calendar.MONTH);
-      dates.add(year+""+month);
+      dates.add(DateUtil.getFormerDate(year+""+month,"yyyyMM"));
     }
     return dates;
   }
