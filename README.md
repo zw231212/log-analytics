@@ -26,6 +26,7 @@ log-analytics
 
 api里面的model和mapper模块是generator来生成的，不是自己写的!
 
+项目依赖的SQL，请执行[aw2sql](https://github.com/zw231212/aw2sql) 这个模块。
 
 
 #### 项目运行
