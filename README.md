@@ -24,6 +24,8 @@ log-analytics
 还有就是对每个controller（MatchedResource）里面的service进行生成。
 每个service必须继承BaseService，然后通过sqlSession获取Mapper信息。
 
+api里面的model和mapper模块是generator来生成的，不是自己写的!
+
 
 
 #### 项目运行

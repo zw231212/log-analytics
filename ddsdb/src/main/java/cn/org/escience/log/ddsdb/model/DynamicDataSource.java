@@ -38,7 +38,7 @@ public class DynamicDataSource extends MysqlDataSource {
   }
 
   public DynamicDataSource(String host, Integer port, String user, String pass, String dialect, String querystring,
-      String driverClass, Integer maxConn, Integer minConn, String database){
+                           String driverClass, Integer maxConn, Integer minConn, String database){
     this.host = host;
     this.port = port;
     this.user = user;
@@ -75,7 +75,7 @@ public class DynamicDataSource extends MysqlDataSource {
     );
   }
 
-  public DynamicDataSource(String host,int port,String user,String pass,String database){
+  public DynamicDataSource(String host, int port, String user, String pass, String database){
     this(host, port, user, pass,
         DataSourceConstant.DEFAULT_DIALECT,
         DataSourceConstant.DEFAULT_QUERYSTRING,

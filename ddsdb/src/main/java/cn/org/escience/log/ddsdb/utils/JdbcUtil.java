@@ -114,7 +114,7 @@ public class JdbcUtil {
    * @param table
    * @return
    */
-  public static boolean existsTable(DynamicDataSource dds,String table){
+  public static boolean existsTable(DynamicDataSource dds, String table){
     Connection conn = getConnection(dds);
     if(conn == null){
       return false;
@@ -139,7 +139,7 @@ public class JdbcUtil {
     return false;
   }
 
-  public static boolean createTableIfNotExisted(DynamicDataSource dds,String table,String tableSql){
+  public static boolean createTableIfNotExisted(DynamicDataSource dds, String table, String tableSql){
     Connection conn = getConnection(dds);
     if(conn == null){
       return false;
