@@ -14,7 +14,7 @@ log-analytics
 
 
 #### 项目模块说明
-（1）generator是用来生成mybatis通用代码的；
+（1）generator是用来生成mybatis通用代码的，（后期删除了，可以查看项目[mybatis-generator]https://github.com/zw231212/mybatis-generator）；
 
 （2）ddsdb：这个模块是根据提供的database name 来生成DataSource，并且在这里管理datasource数据源和数据连接；项目就依赖于mysql驱动库；
 
